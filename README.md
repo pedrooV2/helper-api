@@ -1,7 +1,6 @@
-# helper-api
 # Helper Project API
 
-## Initialize
+### Initialize
 ```
 yarn 
 ```
