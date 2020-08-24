@@ -1,6 +1,6 @@
 <h1 align="center"> :love_hotel: Helper API </h1>
 <h3 align="center">
-  :construction: Em construção :construction:
+  :construction: Em construção... :construction:
 </h3>
 
 ---
@@ -36,7 +36,20 @@ $ docker-compose up -d
 $ yarn dev # com yarn
 $ npm run dev # com npm
 
-# Por padrão o servidor irá iniciar na porta:3333 - acesse <http://localhost:8000>
+# Por padrão o servidor irá iniciar na porta:3333
+```
+
+## :wrench: Executando os testes
+
+:warning: Siga os passos acima antes de executar os testes :warning:
+
+```bash
+# Criar arquivo .env.test seguindo como modelo o arquivo .env.example
+$ cp .env.example .env.test # Unix
+$ copy .env.example .env.test # Windows
+
+# Executando os testes
+$ yarn test
 ```
 
 ## :hammer_and_wrench: Tecnologias utilizadas
