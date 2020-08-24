@@ -16,4 +16,12 @@ module.exports = {
     camelcase: 'off',
     'no-unused-vars': ['error', { argsIgnorePattern: 'next' }],
   },
+  overrides: [
+    {
+      files: ['**/__tests__/**/*.test.js'],
+      rules: {
+        'no-undef': 'off',
+      },
+    },
+  ],
 };
