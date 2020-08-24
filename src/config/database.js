@@ -1,9 +1,11 @@
+const { DB_HOST, DB_USER, DB_PASS, DB_NAME, DB_DIALECT } = process.env;
+
 module.exports = {
-  dialect: 'postgres',
-  host: 'localhost',
-  username: 'postgres',
-  password: '',
-  database: 'helper',
+  dialect: DB_DIALECT,
+  host: DB_HOST,
+  username: DB_USER,
+  password: DB_PASS,
+  database: DB_NAME,
   define: {
     timestamps: true,
     underscored: true,
