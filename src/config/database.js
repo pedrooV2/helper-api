@@ -6,6 +6,7 @@ module.exports = {
   username: DB_USER,
   password: DB_PASS,
   database: DB_NAME,
+  storage: './__tests__/database.sqlite',
   define: {
     timestamps: true,
     underscored: true,
