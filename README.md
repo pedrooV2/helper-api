@@ -9,7 +9,7 @@
 
 - [NodeJS(Preferencialmente a versão 12.18)](https://nodejs.org/en/)
 - [Docker e Docker compose](https://www.docker.com/)
-- **[Yarn (opcional)]**(https://classic.yarnpkg.com/en/docs/install/)
+- **[Yarn (opcional)](https://classic.yarnpkg.com/en/docs/install/)**
 
 ## :clipboard: Executando o projeto
 
