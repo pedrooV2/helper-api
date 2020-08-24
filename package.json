@@ -5,7 +5,9 @@
   "license": "MIT",
   "scripts": {
     "dev": "nodemon src/server.js",
-    "test": "NODE_ENV=test jest"
+    "pretest": "env NODE_ENV=test sequelize db:migrate",
+    "test": "env NODE_ENV=test jest",
+    "posttest": "env NODE_ENV=test sequelize db:migrate:undo:all"
   },
   "dependencies": {
     "dotenv": "^8.2.0",
