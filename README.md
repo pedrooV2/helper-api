@@ -36,7 +36,7 @@ $ docker-compose up -d
 $ yarn dev # com yarn
 $ npm run dev # com npm
 
-#Por padrão o servidor irá iniciar na porta:3333 - acesse <http://localhost:8000>
+# Por padrão o servidor irá iniciar na porta:3333 - acesse <http://localhost:8000>
 ```
 
 ## :hammer_and_wrench: Tecnologias utilizadas

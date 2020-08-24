@@ -1,0 +1,12 @@
+version: "3"
+services:
+  postgresdb:
+    image: postgres
+    container_name: postgresql_helper
+    restart: unless-stopped
+    environment:
+      - "POSTGRES_PASSWORD=root"
+    volumes:
+      - ./data/postgresql:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
