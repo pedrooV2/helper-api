@@ -1,7 +1,10 @@
-function sum(a, b) {
-  return a + b;
-}
+import request from 'supertest';
+import app from '../../src/app';
 
-test('if i call sum function with 2 and 3 it should return 5', () => {
-  expect(sum(2, 3)).toBe(5);
+describe('Example', () => {
+  it('simple request test', async () => {
+    const response = await request(app).get('/');
+
+    expect(response.status).toBe(200);
+  });
 });
