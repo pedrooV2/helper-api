@@ -4,3 +4,4 @@ node_modules
 /data
 
 /__tests__/coverage
+/__tests__/database.sqlite

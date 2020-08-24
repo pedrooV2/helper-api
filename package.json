@@ -28,6 +28,7 @@
     "nodemon": "^2.0.4",
     "prettier": "^2.0.5",
     "sequelize-cli": "^6.2.0",
+    "sqlite3": "^5.0.0",
     "sucrase": "^3.15.0"
   }
 }
