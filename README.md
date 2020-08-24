@@ -1,5 +1,5 @@
-<h1 aling="center"> :love_hotel: Helper API </h1>
-<p aling="center">
+<h1 align="center"> :love_hotel: Helper API </h1>
+<p align="center">
   :construction: Em construção :construction:
 </p>
 
