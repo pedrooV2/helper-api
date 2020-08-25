@@ -1,7 +1,13 @@
 import request from 'supertest';
 import app from '../../../src/app';
 
+import truncate from '../../util/truncate';
+
 describe('Entity', () => {
+  beforeEach(async () => {
+    await truncate();
+  });
+
   it('should be able register entities', async () => {
     const response = await request(app).post('/entities').send({
       name: 'entity name',
