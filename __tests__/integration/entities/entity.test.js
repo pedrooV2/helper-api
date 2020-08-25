@@ -38,4 +38,14 @@ describe('Entity', () => {
 
     expect(compareHash).toBe(true);
   });
+
+  it('should not be able register with passwords length less than six', async () => {
+    const entity = await EntityFactory.attrs('Entity', {
+      password: '12345',
+    });
+
+    const response = await request(app).post('/entities').send(entity);
+
+    expect(response.status).toBe(400);
+  });
 });
