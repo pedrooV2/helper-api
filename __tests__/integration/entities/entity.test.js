@@ -1,6 +1,8 @@
 import request from 'supertest';
+import bcrypt from 'bcryptjs';
 import app from '../../../src/app';
 
+import Entity from '../../../src/app/models/Entity';
 import truncate from '../../util/truncate';
 
 describe('Entity', () => {
@@ -33,5 +35,16 @@ describe('Entity', () => {
     });
 
     expect(response.status).toBe(400);
+  });
+
+  it('should encrypt entity password when new entity created', async () => {
+    const entity = await Entity.create({
+      name: 'entity name',
+      email: 'mail@entity.com',
+      password: '123456',
+    });
+
+    const compareHash = await bcrypt.compare('123456', entity.password_hash);
+    expect(compareHash).toBe(true);
   });
 });
