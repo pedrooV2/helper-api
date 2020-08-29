@@ -2,8 +2,10 @@ import Sequelize from 'sequelize';
 
 import databaseConfig from '../config/database';
 
+import Entity from '../app/models/Entity';
+
 // Load models in array
-const models = [];
+const models = [Entity];
 
 class Database {
   constructor() {
