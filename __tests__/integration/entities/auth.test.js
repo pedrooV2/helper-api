@@ -23,7 +23,7 @@ describe('Entity auth', () => {
     expect(response.status).toBe(201);
   });
 
-  it('should not be able authenticate with invalid credentials', async () => {
+  it('should not be able authenticate with invalid email', async () => {
     const entity = await EntityFactory.attrs('Entity');
 
     const response = await request(app).post('/entities/auth').send({
@@ -32,5 +32,20 @@ describe('Entity auth', () => {
     });
 
     expect(response.status).toBe(404);
+  });
+
+  it('should not be able authenticate with invalid password', async () => {
+    const entity = await EntityFactory.attrs('Entity', {
+      password: '123456',
+    });
+
+    await request(app).post('/entities').send(entity);
+
+    const response = await request(app).post('/entities/auth').send({
+      email: entity.email,
+      password: '1234567',
+    });
+
+    expect(response.status).toBe(401);
   });
 });
