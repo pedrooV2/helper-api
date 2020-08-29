@@ -1,9 +1,9 @@
 import { Router } from 'express';
 
+import EntityController from './app/controllers/EntityController';
+
 const routes = new Router();
 
-routes.get('/', (req, res) => {
-  res.json({ message: 'Hello Helper!' });
-});
+routes.post('/entities', EntityController.store);
 
 export default routes;
