@@ -1,5 +1,5 @@
 import * as Yup from 'yup';
-import Entity from '../models/Entity';
+import Entity from '../../models/Entity';
 
 class EntityController {
   async store(request, response) {
