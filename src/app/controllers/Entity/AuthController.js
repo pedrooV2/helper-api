@@ -1,8 +1,4 @@
-import jwt from 'jsonwebtoken';
-
 import Entity from '../../models/Entity';
-
-import authConfig from '../../../config/auth';
 
 class AuthController {
   async store(request, response) {
@@ -25,9 +21,7 @@ class AuthController {
         id,
         email,
       },
-      token: jwt.sign({ id }, authConfig.secret, {
-        expiresIn: authConfig.expiresIn,
-      }),
+      token: entity.generateToken(),
     });
   }
 }
