@@ -1,3 +1,5 @@
+import rimraf from 'rimraf';
+import { resolve } from 'path';
 import request from 'supertest';
 import app from '../../src/app';
 
@@ -8,6 +10,10 @@ import truncate from '../util/truncate';
 describe('Avatar', () => {
   beforeEach(async () => {
     await truncate();
+  });
+
+  afterAll(() => {
+    rimraf.sync(resolve(__dirname, '..', '..', 'tmp'));
   });
 
   it('should be able to upload avatar', async () => {
