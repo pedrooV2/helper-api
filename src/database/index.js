@@ -3,9 +3,10 @@ import Sequelize from 'sequelize';
 import databaseConfig from '../config/database';
 
 import Entity from '../app/models/Entity';
+import Avatar from '../app/models/Avatar';
 
 // Load models in array
-const models = [Entity];
+const models = [Entity, Avatar];
 
 class Database {
   constructor() {
