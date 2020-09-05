@@ -20,4 +20,4 @@ class Avatar extends Model {
   }
 }
 
-export default Avatar.init();
+export default Avatar;
