@@ -13,7 +13,7 @@ describe('Avatar', () => {
   });
 
   afterAll(() => {
-    rimraf.sync(resolve(__dirname, '..', '..', 'tmp'));
+    rimraf.sync(resolve(__dirname, '..', 'tmp'));
   });
 
   it('should be able to upload avatar', async () => {
