@@ -31,7 +31,7 @@ describe('Avatar', () => {
     const { token } = auth.body;
 
     const response = await request(app)
-      .post('/avatar')
+      .post('/avatars')
       .attach('avatar', filepath)
       .set('authorization', `Bearer ${token}`);
 

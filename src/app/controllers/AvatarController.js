@@ -9,7 +9,7 @@ class AvatarController {
       filepath,
     });
 
-    return response.json(avatar);
+    return response.status(201).json(avatar);
   }
 }
 

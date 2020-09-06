@@ -2,8 +2,8 @@ node_modules
 .env
 .env.test
 /data
-avatars/*
-!avatars/.gitkeep
+tmp/uploads/avatars/*
+!tmp/uploads/avatars/.gitkeep
 
 
 /__tests__/coverage

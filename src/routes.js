@@ -27,5 +27,5 @@ routes.post('/entities', EntityStore, EntityController.store);
 routes.post('/entities/auth', EntityAuth, AuthController.store);
 
 // Upload files
-routes.post('/avatars', upload.single('file'), AvatarController.store);
+routes.post('/avatars', upload.single('avatar'), AvatarController.store);
 export default routes;
