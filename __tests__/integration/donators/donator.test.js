@@ -6,7 +6,7 @@ import DonatorFactory from '../../factories/donator';
 import truncate from '../../util/truncate';
 
 describe('Donator', () => {
-  beforeAll(async () => {
+  beforeEach(async () => {
     await truncate();
   });
 
