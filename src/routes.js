@@ -6,8 +6,9 @@ import multerConfig from './config/multer';
 
 // Controllers
 import EntityController from './app/controllers/Entity/EntityController';
-import AuthController from './app/controllers/Entity/AuthController';
+import EntityAuthController from './app/controllers/Entity/AuthController';
 import DonatorController from './app/controllers/Donator/DonatorController';
+import DonatorAuthController from './app/controllers/Donator/AuthController';
 import AvatarController from './app/controllers/AvatarController';
 
 // Validators
@@ -21,10 +22,11 @@ const upload = multer(multerConfig);
 // Routes
 // Donators
 routes.post('/donators', DonatorStore, DonatorController.store);
+routes.post('/donators/auth', DonatorAuthController.store);
 
 // Entities
 routes.post('/entities', EntityStore, EntityController.store);
-routes.post('/entities/auth', EntityAuth, AuthController.store);
+routes.post('/entities/auth', EntityAuth, EntityAuthController.store);
 
 // Upload files
 routes.post('/avatars', upload.single('avatar'), AvatarController.store);

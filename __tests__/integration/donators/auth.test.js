@@ -39,7 +39,7 @@ describe('Donator auth', () => {
       password: '123456',
     });
 
-    await request(app).post('/donators/auth').send(donator);
+    await request(app).post('/donators').send(donator);
 
     const response = await request(app).post('/donators/auth').send({
       email: donator.email,
