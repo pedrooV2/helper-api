@@ -22,9 +22,9 @@ describe('Donator', () => {
   it('should not be able register donator with duplicated email', async () => {
     const donator = await DonatorFactory.attrs('Donator');
 
-    await request(app).post('donators').send(donator);
+    await request(app).post('/donators').send(donator);
 
-    const response = await request(app).post('donators').send(donator);
+    const response = await request(app).post('/donators').send(donator);
 
     expect(response.status).toBe(400);
   });
