@@ -4,9 +4,10 @@ import databaseConfig from '../config/database';
 
 import Entity from '../app/models/Entity';
 import Avatar from '../app/models/Avatar';
+import Donator from '../app/models/Donator';
 
 // Load models in array
-const models = [Entity, Avatar];
+const models = [Entity, Avatar, Donator];
 
 class Database {
   constructor() {

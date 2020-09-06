@@ -1,4 +1,5 @@
 import Sequelize, { Model } from 'sequelize';
+import bcrypt from 'bcryptjs';
 
 class Donator extends Model {
   static init(sequelize) {
@@ -12,6 +13,12 @@ class Donator extends Model {
       },
       { sequelize }
     );
+
+    this.addHook('beforeSave', async (donator) => {
+      if (donator.password) {
+        donator.password_hash = await bcrypt.hash(donator.password, 8);
+      }
+    });
 
     return this;
   }
