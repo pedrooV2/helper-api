@@ -8,7 +8,9 @@ import Avatar from '../../src/app/models/Avatar';
 
 factory.define('Avatar', Avatar, {
   original_name: faker.name.firstName(),
-  filepath: download(faker.image.avatar(), () => console.log('Done!')),
+  filepath: download(faker.image.avatar(), () => console.log('Done!')).then(
+    (response) => response
+  ),
 });
 
 export default factory;
