@@ -1,4 +1,5 @@
 import Donator from '../../models/Donator';
+import Avatar from '../../models/Avatar';
 
 class DonatorController {
   async store(request, response) {
@@ -6,6 +7,9 @@ class DonatorController {
 
     const donator = await Donator.findOne({
       where: { email },
+      include: [
+        { model: Avatar, as: 'avatar', attributes: ['id', 'filepath', 'url'] },
+      ],
     });
 
     if (!donator) {
@@ -16,8 +20,10 @@ class DonatorController {
       return response.status(401).json({ error: 'Password does not match' });
     }
 
+    const { full_name, phone, avatar } = donator;
+
     return response.status(201).json({
-      donator,
+      donator: { full_name, email, phone, avatar },
       token: donator.generateToken(),
     });
   }

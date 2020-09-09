@@ -36,6 +36,10 @@ class Donator extends Model {
       expiresIn: authConfig.expiresIn,
     });
   }
+
+  static associate(models) {
+    this.belongsTo(models.Avatar, { foreignKey: 'avatar_id', as: 'avatar' });
+  }
 }
 
 export default Donator;

@@ -5,9 +5,10 @@ import databaseConfig from '../config/database';
 import Entity from '../app/models/Entity';
 import Avatar from '../app/models/Avatar';
 import Donator from '../app/models/Donator';
+import Case from '../app/models/Case';
 
 // Load models in array
-const models = [Entity, Avatar, Donator];
+const models = [Entity, Avatar, Donator, Case];
 
 class Database {
   constructor() {
@@ -17,7 +18,11 @@ class Database {
   init() {
     this.connection = new Sequelize(databaseConfig);
 
-    models.map((model) => model.init(this.connection));
+    models
+      .map((model) => model.init(this.connection))
+      .map(
+        (model) => model.associate && model.associate(this.connection.models)
+      );
   }
 }
 
