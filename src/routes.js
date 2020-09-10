@@ -10,6 +10,10 @@ import EntityAuthController from './app/controllers/Entity/AuthController';
 import DonatorController from './app/controllers/Donator/DonatorController';
 import DonatorAuthController from './app/controllers/Donator/AuthController';
 import AvatarController from './app/controllers/AvatarController';
+import CaseController from './app/controllers/CaseController';
+
+//  Middlewares
+import authEntity from './app/middlewares/authEntity';
 
 // Validators
 import EntityStore from './app/validators/Entity/EntityStore';
@@ -27,6 +31,9 @@ routes.post('/donators/auth', DonatorAuthController.store);
 // Entities
 routes.post('/entities', EntityStore, EntityController.store);
 routes.post('/entities/auth', EntityAuth, EntityAuthController.store);
+
+routes.use(authEntity);
+routes.post('/cases', CaseController.store);
 
 // Upload files
 routes.post('/avatars', upload.single('avatar'), AvatarController.store);
