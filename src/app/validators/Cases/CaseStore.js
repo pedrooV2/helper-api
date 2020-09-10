@@ -3,8 +3,9 @@ import * as Yup from 'yup';
 export default async (request, response, next) => {
   try {
     const schema = Yup.object().shape({
-      email: Yup.string().required(),
-      password: Yup.string().required(),
+      title: Yup.string().required(),
+      description: Yup.string().required(),
+      value: Yup.number().required(),
     });
 
     await schema.validate(request.body, { abortEarly: false });

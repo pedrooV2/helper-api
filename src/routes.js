@@ -19,6 +19,7 @@ import authEntity from './app/middlewares/authEntity';
 import EntityStore from './app/validators/Entity/EntityStore';
 import EntityAuth from './app/validators/Entity/EntityAuth';
 import DonatorStore from './app/validators/Donator/DonatorStore';
+import CaseStore from './app/validators/Cases/CaseStore';
 
 const routes = new Router();
 const upload = multer(multerConfig);
@@ -33,7 +34,7 @@ routes.post('/entities', EntityStore, EntityController.store);
 routes.post('/entities/auth', EntityAuth, EntityAuthController.store);
 
 routes.use(authEntity);
-routes.post('/cases', CaseController.store);
+routes.post('/cases', CaseStore, CaseController.store);
 
 // Upload files
 routes.post('/avatars', upload.single('avatar'), AvatarController.store);
