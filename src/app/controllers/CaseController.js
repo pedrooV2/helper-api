@@ -1,6 +1,4 @@
 class CaseController {
-  async store(request, response) {
-    response.json('ok');
-  }
+  async store(request, response) {}
 }
 export default new CaseController();

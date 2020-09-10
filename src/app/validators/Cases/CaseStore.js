@@ -6,6 +6,7 @@ export default async (request, response, next) => {
       title: Yup.string().required(),
       description: Yup.string().required(),
       value: Yup.number().required(),
+      entity_id: Yup.number().required(),
     });
 
     await schema.validate(request.body, { abortEarly: false });
