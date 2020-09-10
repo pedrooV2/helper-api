@@ -35,6 +35,7 @@ routes.post('/entities/auth', EntityAuth, EntityAuthController.store);
 
 routes.use(authEntity);
 routes.post('/cases', CaseStore, CaseController.store);
+// routes.post('/cases/:id/files', upload.single('avatar'), FileController.store);
 
 // Upload files
 routes.post('/avatars', upload.single('avatar'), AvatarController.store);

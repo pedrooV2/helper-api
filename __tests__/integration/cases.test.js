@@ -24,7 +24,7 @@ describe('Cases', () => {
       password: '123456',
     });
 
-    const auth = await request(app).post('/entity/auth').send({
+    const auth = await request(app).post('/entities/auth').send({
       email: entity.email,
       password: '123456',
     });
