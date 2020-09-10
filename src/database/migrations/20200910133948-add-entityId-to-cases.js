@@ -5,7 +5,7 @@ module.exports = {
       references: { model: 'entities', key: 'id' },
       onUpdate: 'CASCADE',
       onDelete: 'SET NULL',
-      allowNull: false,
+      defaultValue: null,
     });
   },
 
