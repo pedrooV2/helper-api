@@ -11,6 +11,7 @@ import DonatorController from './app/controllers/Donator/DonatorController';
 import DonatorAuthController from './app/controllers/Donator/AuthController';
 import AvatarController from './app/controllers/AvatarController';
 import CaseController from './app/controllers/CaseController';
+import FileController from './app/controllers/FileController';
 
 //  Middlewares
 import authEntity from './app/middlewares/authEntity';
@@ -35,7 +36,12 @@ routes.post('/entities/auth', EntityAuth, EntityAuthController.store);
 
 routes.use(authEntity);
 routes.post('/cases', CaseStore, CaseController.store);
-// routes.post('/cases/:id/files', upload.single('avatar'), FileController.store);
+routes.post(
+  '/cases/:id/files',
+  authEntity,
+  upload.single('file'),
+  FileController.store
+);
 
 // Upload files
 routes.post('/avatars', upload.single('avatar'), AvatarController.store);
