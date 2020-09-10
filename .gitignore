@@ -4,6 +4,8 @@ node_modules
 /data
 tmp/uploads/avatars/*
 !tmp/uploads/avatars/.gitkeep
+tmp/uploads/files/*
+!tmp/uploads/files/.gitkeep
 
 
 /__tests__/coverage
