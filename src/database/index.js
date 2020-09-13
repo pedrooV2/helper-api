@@ -7,9 +7,10 @@ import Avatar from '../app/models/Avatar';
 import Donator from '../app/models/Donator';
 import Case from '../app/models/Case';
 import File from '../app/models/File';
+import EntityProfile from '../app/models/EntityProfile';
 
 // Load models in array
-const models = [Entity, Avatar, Donator, Case, File];
+const models = [Entity, Avatar, Donator, Case, File, EntityProfile];
 
 class Database {
   constructor() {
