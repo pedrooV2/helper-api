@@ -34,7 +34,7 @@ routes.post('/donators/auth', DonatorAuthController.store);
 // Entities
 routes.post('/entities', EntityStore, EntityController.store);
 routes.post('/entities/auth', EntityAuth, EntityAuthController.store);
-routes.post('/entities/profiles', ProfileController);
+routes.post('/entities/profiles', ProfileController.store);
 
 routes.use(authEntity);
 routes.post('/cases', CaseStore, CaseController.store);
