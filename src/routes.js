@@ -20,6 +20,7 @@ import authEntity from './app/middlewares/authEntity';
 // Validators
 import EntityStore from './app/validators/Entity/EntityStore';
 import EntityAuth from './app/validators/Entity/EntityAuth';
+import Profile from './app/validators/Entity/Profile';
 import DonatorStore from './app/validators/Donator/DonatorStore';
 import CaseStore from './app/validators/Cases/CaseStore';
 
@@ -34,7 +35,7 @@ routes.post('/donators/auth', DonatorAuthController.store);
 // Entities
 routes.post('/entities', EntityStore, EntityController.store);
 routes.post('/entities/auth', EntityAuth, EntityAuthController.store);
-routes.post('/entities/profiles', ProfileController.store);
+routes.post('/entities/profiles', Profile, ProfileController.store);
 
 routes.use(authEntity);
 routes.post('/cases', CaseStore, CaseController.store);
