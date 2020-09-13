@@ -7,6 +7,7 @@ import multerConfig from './config/multer';
 // Controllers
 import EntityController from './app/controllers/Entity/EntityController';
 import EntityAuthController from './app/controllers/Entity/AuthController';
+import ProfileController from './app/controllers/Entity/ProfileController';
 import DonatorController from './app/controllers/Donator/DonatorController';
 import DonatorAuthController from './app/controllers/Donator/AuthController';
 import AvatarController from './app/controllers/AvatarController';
@@ -33,6 +34,7 @@ routes.post('/donators/auth', DonatorAuthController.store);
 // Entities
 routes.post('/entities', EntityStore, EntityController.store);
 routes.post('/entities/auth', EntityAuth, EntityAuthController.store);
+routes.post('/entities/profiles', ProfileController);
 
 routes.use(authEntity);
 routes.post('/cases', CaseStore, CaseController.store);
