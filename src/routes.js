@@ -13,16 +13,18 @@ import DonatorAuthController from './app/controllers/Donator/AuthController';
 import AvatarController from './app/controllers/AvatarController';
 import CaseController from './app/controllers/CaseController';
 import FileController from './app/controllers/FileController';
+import PhoneController from './app/controllers/PhoneCotroller';
 
 //  Middlewares
-import authEntity from './app/middlewares/authEntity';
+import authMiddleware from './app/middlewares/auth';
 
 // Validators
 import EntityStore from './app/validators/Entity/EntityStore';
 import EntityAuth from './app/validators/Entity/EntityAuth';
-import Profile from './app/validators/Entity/Profile';
+import ProfileStore from './app/validators/Entity/ProfileStore';
 import DonatorStore from './app/validators/Donator/DonatorStore';
 import CaseStore from './app/validators/Cases/CaseStore';
+import PhoneStore from './app/validators/Phone/PhoneStore';
 
 const routes = new Router();
 const upload = multer(multerConfig);
@@ -35,16 +37,13 @@ routes.post('/donators/auth', DonatorAuthController.store);
 // Entities
 routes.post('/entities', EntityStore, EntityController.store);
 routes.post('/entities/auth', EntityAuth, EntityAuthController.store);
-routes.post('/entities/profiles', Profile, ProfileController.store);
+routes.post('/entities/profiles', ProfileStore, ProfileController.store);
 
-routes.use(authEntity);
+// Private routes
+routes.use(authMiddleware);
+routes.post('/entities/phones', PhoneStore, PhoneController.store);
 routes.post('/cases', CaseStore, CaseController.store);
-routes.post(
-  '/cases/:id/files',
-  authEntity,
-  upload.single('file'),
-  FileController.store
-);
+routes.post('/cases/:id/files', upload.single('file'), FileController.store);
 
 // Upload files
 routes.post('/avatars', upload.single('avatar'), AvatarController.store);
