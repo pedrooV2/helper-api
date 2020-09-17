@@ -17,6 +17,7 @@ import PhoneController from './app/controllers/PhoneCotroller';
 
 //  Middlewares
 import authMiddleware from './app/middlewares/auth';
+import isEntityMiddleware from './app/middlewares/entity';
 
 // Validators
 import EntityStore from './app/validators/Entity/EntityStore';
@@ -41,8 +42,13 @@ routes.post('/entities/profiles', ProfileStore, ProfileController.store);
 
 // Private routes
 routes.use(authMiddleware);
-routes.post('/entities/phones', PhoneStore, PhoneController.store);
-routes.post('/cases', CaseStore, CaseController.store);
+routes.post(
+  '/entities/phones',
+  isEntityMiddleware,
+  PhoneStore,
+  PhoneController.store
+);
+routes.post('/cases', isEntityMiddleware, CaseStore, CaseController.store);
 routes.post('/cases/:id/files', upload.single('file'), FileController.store);
 
 // Upload files
