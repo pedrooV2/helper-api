@@ -51,11 +51,20 @@ routes.post(
 
 // Private routes
 routes.use(authMiddleware);
+
+// Phones
 routes.post(
   '/entities/phones',
   isEntityMiddleware,
   validatePhoneStore,
   PhoneController.store
+);
+
+// Social Medias
+routes.get(
+  '/entities/socialmedias',
+  isEntityMiddleware,
+  SocialMediaController.index
 );
 routes.post(
   '/entities/socialmedias',
@@ -63,6 +72,8 @@ routes.post(
   validateSocialMedia,
   SocialMediaController.store
 );
+
+// Cases
 routes.post(
   '/cases',
   isEntityMiddleware,
