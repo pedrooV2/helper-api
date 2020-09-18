@@ -6,17 +6,28 @@ class Case extends Model {
       {
         title: Sequelize.STRING,
         description: Sequelize.STRING,
-        value: Sequelize.NUMBER,
-        value_collected: Sequelize.NUMBER,
+        value: {
+          type: Sequelize.NUMBER,
+          get() {
+            return this.getDataValue('value') / 100;
+          },
+          set(value) {
+            this.setDataValue('value', value * 100);
+          },
+        },
+        value_collected: {
+          type: Sequelize.NUMBER,
+          get() {
+            return this.getDataValue('value_collected') / 100;
+          },
+          set(value) {
+            this.setDataValue('value_collected', value * 100);
+          },
+        },
         opened: Sequelize.BOOLEAN,
       },
       { sequelize }
     );
-
-    this.addHook('beforeSave', async (caseModel) => {
-      if (caseModel.value) caseModel.value *= 100;
-      if (caseModel.value_collected) caseModel.value_collected *= 100;
-    });
 
     return this;
   }

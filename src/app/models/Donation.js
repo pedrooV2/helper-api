@@ -7,16 +7,15 @@ class Donation extends Model {
         value: {
           type: Sequelize.INTEGER,
           get() {
-            return this.value * 100;
+            return this.getDataValue('value') / 100;
+          },
+          set(value) {
+            this.setDataValue('value', value * 100);
           },
         },
       },
       { sequelize }
     );
-
-    this.addHook('beforeSave', async (donation) => {
-      if (donation.value) donation.value *= 100;
-    });
 
     return this;
   }
