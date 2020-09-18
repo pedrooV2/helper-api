@@ -29,6 +29,7 @@ import validateProfileStore from './app/validators/Entity/ProfileStore';
 import validateDonatorStore from './app/validators/Donator/DonatorStore';
 import validateCaseStore from './app/validators/Cases/CaseStore';
 import validatePhoneStore from './app/validators/Phone/PhoneStore';
+import validateSocialMedia from './app/validators/SocialMedia/SocialMediaStore';
 import validateDonationStore from './app/validators/Donation/DonationStore';
 
 const routes = new Router();
@@ -59,6 +60,7 @@ routes.post(
 routes.post(
   '/entities/socialmedias',
   isEntityMiddleware,
+  validateSocialMedia,
   SocialMediaController.store
 );
 routes.post(
