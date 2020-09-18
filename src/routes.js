@@ -22,40 +22,51 @@ import isEntityMiddleware from './app/middlewares/entity';
 import isDonatorMiddleware from './app/middlewares/donator';
 
 // Validators
-import EntityStore from './app/validators/Entity/EntityStore';
-import EntityAuth from './app/validators/Entity/EntityAuth';
-import ProfileStore from './app/validators/Entity/ProfileStore';
-import DonatorStore from './app/validators/Donator/DonatorStore';
-import CaseStore from './app/validators/Cases/CaseStore';
-import PhoneStore from './app/validators/Phone/PhoneStore';
+import validateEntityStore from './app/validators/Entity/EntityStore';
+import validateEntityAuth from './app/validators/Entity/EntityAuth';
+import validateProfileStore from './app/validators/Entity/ProfileStore';
+import validateDonatorStore from './app/validators/Donator/DonatorStore';
+import validateCaseStore from './app/validators/Cases/CaseStore';
+import validatePhoneStore from './app/validators/Phone/PhoneStore';
+import validateDonationStore from './app/validators/Donation/DonationStore';
 
 const routes = new Router();
 const upload = multer(multerConfig);
 
 // Routes
 // Donators
-routes.post('/donators', DonatorStore, DonatorController.store);
+routes.post('/donators', validateDonatorStore, DonatorController.store);
 routes.post('/donators/auth', DonatorAuthController.store);
 
 // Entities
-routes.post('/entities', EntityStore, EntityController.store);
-routes.post('/entities/auth', EntityAuth, EntityAuthController.store);
-routes.post('/entities/profiles', ProfileStore, ProfileController.store);
+routes.post('/entities', validateEntityStore, EntityController.store);
+routes.post('/entities/auth', validateEntityAuth, EntityAuthController.store);
+routes.post(
+  '/entities/profiles',
+  validateProfileStore,
+  ProfileController.store
+);
 
 // Private routes
 routes.use(authMiddleware);
 routes.post(
   '/entities/phones',
   isEntityMiddleware,
-  PhoneStore,
+  validatePhoneStore,
   PhoneController.store
 );
-routes.post('/cases', isEntityMiddleware, CaseStore, CaseController.store);
+routes.post(
+  '/cases',
+  isEntityMiddleware,
+  validateCaseStore,
+  CaseController.store
+);
 routes.post('/cases/:id/files', upload.single('file'), FileController.store);
 
 routes.post(
   '/cases/:id/donations',
   isDonatorMiddleware,
+  validateDonationStore,
   DonationController.store
 );
 
