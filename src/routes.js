@@ -14,6 +14,7 @@ import AvatarController from './app/controllers/AvatarController';
 import CaseController from './app/controllers/CaseController';
 import FileController from './app/controllers/FileController';
 import PhoneController from './app/controllers/PhoneCotroller';
+import SocialMediaController from './app/controllers/SocialMediaController';
 import DonationController from './app/controllers/DonationController';
 
 //  Middlewares
@@ -54,6 +55,11 @@ routes.post(
   isEntityMiddleware,
   validatePhoneStore,
   PhoneController.store
+);
+routes.post(
+  '/entities/socialmedias',
+  isEntityMiddleware,
+  SocialMediaController.store
 );
 routes.post(
   '/cases',
