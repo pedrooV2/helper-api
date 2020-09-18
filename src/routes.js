@@ -14,6 +14,7 @@ import AvatarController from './app/controllers/AvatarController';
 import CaseController from './app/controllers/CaseController';
 import FileController from './app/controllers/FileController';
 import PhoneController from './app/controllers/PhoneCotroller';
+import SocialMediaController from './app/controllers/SocialMediaController';
 import DonationController from './app/controllers/DonationController';
 
 //  Middlewares
@@ -28,6 +29,7 @@ import validateProfileStore from './app/validators/Entity/ProfileStore';
 import validateDonatorStore from './app/validators/Donator/DonatorStore';
 import validateCaseStore from './app/validators/Cases/CaseStore';
 import validatePhoneStore from './app/validators/Phone/PhoneStore';
+import validateSocialMedia from './app/validators/SocialMedia/SocialMediaStore';
 import validateDonationStore from './app/validators/Donation/DonationStore';
 
 const routes = new Router();
@@ -49,12 +51,29 @@ routes.post(
 
 // Private routes
 routes.use(authMiddleware);
+
+// Phones
 routes.post(
   '/entities/phones',
   isEntityMiddleware,
   validatePhoneStore,
   PhoneController.store
 );
+
+// Social Medias
+routes.get(
+  '/entities/socialmedias',
+  isEntityMiddleware,
+  SocialMediaController.index
+);
+routes.post(
+  '/entities/socialmedias',
+  isEntityMiddleware,
+  validateSocialMedia,
+  SocialMediaController.store
+);
+
+// Cases
 routes.post(
   '/cases',
   isEntityMiddleware,

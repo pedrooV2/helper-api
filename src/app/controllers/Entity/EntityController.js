@@ -14,9 +14,13 @@ class EntityController {
         .json({ error: 'Entity email already exists' });
     }
 
-    const entity = await Entity.create(request.body);
+    const { id, name } = await Entity.create(request.body);
 
-    return response.status(201).json(entity);
+    return response.status(201).json({
+      id,
+      name,
+      email,
+    });
   }
 }
 export default new EntityController();

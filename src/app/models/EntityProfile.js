@@ -13,7 +13,6 @@ class EntityProfile extends Model {
         neighborhood: Sequelize.STRING,
         city: Sequelize.STRING,
         state: Sequelize.STRING,
-        entity_id: Sequelize.INTEGER,
       },
       { sequelize, tableName: 'entity_profiles' }
     );

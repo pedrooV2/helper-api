@@ -14,9 +14,17 @@ class DonatorController {
         .json({ error: 'Donator email alredy exists' });
     }
 
-    const donator = await Donator.create(request.body);
+    const { id, full_name, phone, avatar_id } = await Donator.create(
+      request.body
+    );
 
-    return response.status(201).json(donator);
+    return response.status(201).json({
+      id,
+      full_name,
+      email,
+      phone,
+      avatar_id,
+    });
   }
 }
 
