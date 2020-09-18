@@ -14,6 +14,10 @@ class Donation extends Model {
       { sequelize }
     );
 
+    this.addHook('beforeSave', async (donation) => {
+      if (donation.value) donation.value *= 100;
+    });
+
     return this;
   }
 

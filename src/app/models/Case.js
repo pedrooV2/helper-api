@@ -12,6 +12,12 @@ class Case extends Model {
       },
       { sequelize }
     );
+
+    this.addHook('beforeSave', async (caseModel) => {
+      if (caseModel.value) caseModel.value *= 100;
+      if (caseModel.value_collected) caseModel.value_collected *= 100;
+    });
+
     return this;
   }
 
