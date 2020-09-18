@@ -14,10 +14,12 @@ import AvatarController from './app/controllers/AvatarController';
 import CaseController from './app/controllers/CaseController';
 import FileController from './app/controllers/FileController';
 import PhoneController from './app/controllers/PhoneCotroller';
+import DonationController from './app/controllers/DonationController';
 
 //  Middlewares
 import authMiddleware from './app/middlewares/auth';
 import isEntityMiddleware from './app/middlewares/entity';
+import isDonatorMiddleware from './app/middlewares/donator';
 
 // Validators
 import EntityStore from './app/validators/Entity/EntityStore';
@@ -50,6 +52,12 @@ routes.post(
 );
 routes.post('/cases', isEntityMiddleware, CaseStore, CaseController.store);
 routes.post('/cases/:id/files', upload.single('file'), FileController.store);
+
+routes.post(
+  '/cases/:id/donations',
+  isDonatorMiddleware,
+  DonationController.store
+);
 
 // Upload files
 routes.post('/avatars', upload.single('avatar'), AvatarController.store);
