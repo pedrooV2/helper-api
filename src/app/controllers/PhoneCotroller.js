@@ -16,7 +16,7 @@ class PhoneController {
 
     const { id } = await Phone.create({ phone, entity_profile_id: profile.id });
 
-    return response.json({ id, phone });
+    return response.status(201).json({ id, phone });
   }
 }
 
