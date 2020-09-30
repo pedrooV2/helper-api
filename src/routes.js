@@ -32,10 +32,17 @@ import validatePhoneStore from './app/validators/Phone/PhoneStore';
 import validateSocialMedia from './app/validators/SocialMedia/SocialMediaStore';
 import validateDonationStore from './app/validators/Donation/DonationStore';
 
+import SampleMail from './app/jobs/SampleMail';
+
 const routes = new Router();
 const upload = multer(multerConfig);
 
 // Routes
+
+routes.get('/mail', async (request, response) => {
+  return response.json();
+});
+
 // Donators
 routes.post('/donators', validateDonatorStore, DonatorController.store);
 routes.post('/donators/auth', DonatorAuthController.store);
