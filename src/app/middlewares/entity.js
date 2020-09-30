@@ -1,11 +1,7 @@
-import Entity from '../models/Entity';
-
 export default async (request, response, next) => {
-  const { id } = request;
+  const { accessIdentifier } = request;
 
-  const entity = await Entity.findByPk(id);
-
-  if (!entity) {
+  if (!accessIdentifier.isEntity) {
     return response.status(403).json({ error: 'Operation not permitted' });
   }
 

@@ -33,9 +33,16 @@ class Entity extends Model {
 
   generateToken() {
     const { id } = this;
-    return jwt.sign({ id }, authConfig.secret, {
-      expiresIn: authConfig.expiresIn,
-    });
+    return jwt.sign(
+      {
+        id,
+        accessIdentifier: { isEntity: true },
+      },
+      authConfig.secret,
+      {
+        expiresIn: authConfig.expiresIn,
+      }
+    );
   }
 }
 
