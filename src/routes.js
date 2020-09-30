@@ -32,8 +32,19 @@ import validatePhoneStore from './app/validators/Phone/PhoneStore';
 import validateSocialMedia from './app/validators/SocialMedia/SocialMediaStore';
 import validateDonationStore from './app/validators/Donation/DonationStore';
 
+// import Mail from './libs/Mail';
+
 const routes = new Router();
 const upload = multer(multerConfig);
+
+// routes.get('/mail', async () => {
+//   await Mail.sendMail({
+//     from: '"Fred Foo" <foo@example.com>',
+//     to: 'bar@example.com, baz@example.com',
+//     subject: 'A mail with nodemailer and handlebars',
+//     html: '<b>Test</b>',
+//   });
+// });
 
 // Routes
 // Donators
