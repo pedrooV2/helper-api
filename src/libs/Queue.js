@@ -1,8 +1,36 @@
+/* eslint-disable no-console */
 import Bull from 'bull';
 import redisConfig from '../config/redis';
 
-import SimpleMail from '../app/jobs/SampleMail';
+import jobs from '../app/jobs';
 
-const mailQueue = new Bull(SimpleMail.key, redisConfig);
+class Queue {
+  constructor() {
+    this.queues = jobs.map((job) => ({
+      bull: new Bull(job.key, redisConfig),
+      name: job.key,
+      handle: job.handle,
+    }));
+  }
 
-export default mailQueue;
+  add(name, data) {
+    const queue = this.queues.find((q) => q.name === name);
+    return queue.bull.add(data);
+  }
+
+  process() {
+    return this.queues.forEach((queue) => {
+      queue.bull.process(queue.handle);
+      queue.bull.on('failed', (job, err) => {
+        this.handleFailure(job, err, queue.name);
+      });
+    });
+  }
+
+  handleFailure(job, err, name) {
+    console.log('Job failed', name, job.data);
+    console.error(err);
+  }
+}
+
+export default new Queue();
