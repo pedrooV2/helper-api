@@ -32,9 +32,16 @@ class Donator extends Model {
 
   generateToken() {
     const { id } = this;
-    return jwt.sign({ id }, authConfig.secret, {
-      expiresIn: authConfig.expiresIn,
-    });
+    return jwt.sign(
+      {
+        id,
+        accessIdentifier: { isDonator: true },
+      },
+      authConfig.secret,
+      {
+        expiresIn: authConfig.expiresIn,
+      }
+    );
   }
 
   static associate(models) {
