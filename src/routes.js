@@ -32,24 +32,10 @@ import validatePhoneStore from './app/validators/Phone/PhoneStore';
 import validateSocialMedia from './app/validators/SocialMedia/SocialMediaStore';
 import validateDonationStore from './app/validators/Donation/DonationStore';
 
-import Queue from './libs/Queue';
-import SampleMail from './app/jobs/SampleMail';
-
 const routes = new Router();
 const upload = multer(multerConfig);
 
 // Routes
-
-routes.get('/mail', async (request, response) => {
-  await Queue.add(SampleMail.key, {
-    name: 'Gabriel',
-    email: 'ga@mail.com',
-    githubLink: 'https://github.com/gaoliveira21',
-  });
-
-  return response.json();
-});
-
 // Donators
 routes.post('/donators', validateDonatorStore, DonatorController.store);
 routes.post('/donators/auth', DonatorAuthController.store);
