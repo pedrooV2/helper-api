@@ -4,13 +4,13 @@ class DonatorService {
   constructor() {
     const { donatorModel } = DonatorFactory();
 
-    this.model = donatorModel;
+    this.donatorModel = donatorModel;
   }
 
   async create(payload) {
     const { email } = payload;
 
-    const checkDonatorExists = await this.model.findOne({
+    const checkDonatorExists = await this.donatorModel.findOne({
       where: { email },
     });
 
@@ -21,7 +21,7 @@ class DonatorService {
       };
     }
 
-    const { id, full_name, phone, avatar_id } = await this.model.create(
+    const { id, full_name, phone, avatar_id } = await this.donatorModel.create(
       payload
     );
 
