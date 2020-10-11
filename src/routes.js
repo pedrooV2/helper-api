@@ -31,25 +31,13 @@ import validateCaseStore from './app/validators/Cases/CaseStore';
 import validatePhoneStore from './app/validators/Phone/PhoneStore';
 import validateSocialMedia from './app/validators/SocialMedia/SocialMediaStore';
 import validateDonationStore from './app/validators/Donation/DonationStore';
-
-import Queue from './libs/Queue';
-import SampleMail from './app/jobs/SampleMail';
+import validateAvatarStore from './app/validators/Avatar/AvatarStore';
+import validateFileStore from './app/validators/File/FileStore';
 
 const routes = new Router();
 const upload = multer(multerConfig);
 
 // Routes
-
-routes.get('/mail', async (request, response) => {
-  await Queue.add(SampleMail.key, {
-    name: 'Gabriel',
-    email: 'ga@mail.com',
-    githubLink: 'https://github.com/gaoliveira21',
-  });
-
-  return response.json();
-});
-
 // Donators
 routes.post('/donators', validateDonatorStore, DonatorController.store);
 routes.post('/donators/auth', DonatorAuthController.store);
@@ -94,7 +82,12 @@ routes.post(
   validateCaseStore,
   CaseController.store
 );
-routes.post('/cases/:id/files', upload.single('file'), FileController.store);
+routes.post(
+  '/cases/:id/files',
+  upload.single('file'),
+  validateFileStore,
+  FileController.store
+);
 
 routes.post(
   '/cases/:id/donations',
@@ -104,5 +97,10 @@ routes.post(
 );
 
 // Upload files
-routes.post('/avatars', upload.single('avatar'), AvatarController.store);
+routes.post(
+  '/avatars',
+  upload.single('avatar'),
+  validateAvatarStore,
+  AvatarController.store
+);
 export default routes;

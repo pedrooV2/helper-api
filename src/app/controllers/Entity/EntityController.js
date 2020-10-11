@@ -1,26 +1,16 @@
-import Entity from '../../models/Entity';
+import EntityService from '../../services/Entity/service';
 
 class EntityController {
   async store(request, response) {
-    const { email } = request.body;
+    const { statusCode, data, error } = await new EntityService().create(
+      request.body
+    );
 
-    const entityExists = await Entity.findOne({
-      where: { email },
-    });
-
-    if (entityExists) {
-      return response
-        .status(400)
-        .json({ error: 'Entity email already exists' });
+    if (error) {
+      return response.status(statusCode).json({ error });
     }
 
-    const { id, name } = await Entity.create(request.body);
-
-    return response.status(201).json({
-      id,
-      name,
-      email,
-    });
+    return response.status(statusCode).json({ ...data });
   }
 }
 export default new EntityController();

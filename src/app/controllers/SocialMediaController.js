@@ -1,44 +1,35 @@
-import EntityProfile from '../models/EntityProfile';
-import SocialMedia from '../models/SocialMedia';
+import SocialMediaService from '../services/Entity/SocialMedia/service';
 
 class SocialMediaController {
   async index(request, response) {
     const { id: entityId } = request;
 
-    const profile = await EntityProfile.findOne({
-      where: { entity_id: entityId },
+    const { statusCode, data, error } = await new SocialMediaService().findAll({
+      entityId,
     });
 
-    if (!profile) {
-      return response.status(404).json({ error: 'Profile not found' });
+    if (error) {
+      return response.status(statusCode).json({ error });
     }
 
-    const socialMedias = await SocialMedia.findAll({
-      where: { entity_profile_id: profile.id },
-    });
-
-    return response.status(200).json(socialMedias);
+    return response.status(statusCode).json([...data]);
   }
 
   async store(request, response) {
     const { name, link } = request.body;
     const { id: entityId } = request;
 
-    const profile = await EntityProfile.findOne({
-      where: { entity_id: entityId },
-    });
-
-    if (!profile) {
-      return response.status(404).json({ error: 'Profile not found' });
-    }
-
-    const { id } = await SocialMedia.create({
+    const { statusCode, data, error } = await new SocialMediaService().create({
+      entityId,
       name,
       link,
-      entity_profile_id: profile.id,
     });
 
-    return response.status(201).json({ id, name, link });
+    if (error) {
+      return response.status(statusCode).json({ error });
+    }
+
+    return response.status(statusCode).json({ ...data });
   }
 }
 

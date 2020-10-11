@@ -1,30 +1,16 @@
-import Donator from '../../models/Donator';
+import DonatorService from '../../services/Donator/service';
 
 class DonatorController {
   async store(request, response) {
-    const { email } = request.body;
-
-    const checkDonatorExists = await Donator.findOne({
-      where: { email },
-    });
-
-    if (checkDonatorExists) {
-      return response
-        .status(400)
-        .json({ error: 'Donator email alredy exists' });
-    }
-
-    const { id, full_name, phone, avatar_id } = await Donator.create(
+    const { statusCode, error, data } = await new DonatorService().create(
       request.body
     );
 
-    return response.status(201).json({
-      id,
-      full_name,
-      email,
-      phone,
-      avatar_id,
-    });
+    if (error) {
+      return response.status(statusCode).json({ error });
+    }
+
+    return response.status(statusCode).json({ ...data });
   }
 }
 

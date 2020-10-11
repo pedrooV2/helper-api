@@ -1,31 +1,16 @@
-import Donator from '../../models/Donator';
-import Avatar from '../../models/Avatar';
+import DonatorService from '../../services/Donator/service';
 
 class DonatorController {
   async store(request, response) {
-    const { email, password } = request.body;
+    const { statusCode, data, error } = await new DonatorService().auth(
+      request.body
+    );
 
-    const donator = await Donator.findOne({
-      where: { email },
-      include: [
-        { model: Avatar, as: 'avatar', attributes: ['id', 'filepath', 'url'] },
-      ],
-    });
-
-    if (!donator) {
-      return response.status(404).json({ error: 'Donator not found' });
+    if (error) {
+      return response.status(statusCode).json({ error });
     }
 
-    if (!(await donator.checkPassword(password))) {
-      return response.status(401).json({ error: 'Password does not match' });
-    }
-
-    const { full_name, phone, avatar } = donator;
-
-    return response.status(201).json({
-      donator: { full_name, email, phone, avatar },
-      token: donator.generateToken(),
-    });
+    return response.status(statusCode).json({ ...data });
   }
 }
 
