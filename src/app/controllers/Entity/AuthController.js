@@ -1,28 +1,16 @@
-import Entity from '../../models/Entity';
+import EntityService from '../../services/Entity/service';
 
 class AuthController {
   async store(request, response) {
-    const { email, password } = request.body;
+    const { statusCode, data, error } = await new EntityService().auth(
+      request.body
+    );
 
-    const entity = await Entity.findOne({ where: { email } });
-
-    if (!entity) {
-      return response.status(404).json({ error: 'Entity not found' });
+    if (error) {
+      return response.status(statusCode).json({ error });
     }
 
-    if (!(await entity.checkPassword(password))) {
-      return response.status(401).json({ error: 'Password does not match' });
-    }
-
-    const { id } = entity;
-
-    return response.status(201).json({
-      entity: {
-        id,
-        email,
-      },
-      token: entity.generateToken(),
-    });
+    return response.status(statusCode).json({ ...data });
   }
 }
 export default new AuthController();
