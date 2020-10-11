@@ -1,5 +1,4 @@
-import Case from '../models/Case';
-import Donation from '../models/Donation';
+import DonationService from '../services/Donation/service';
 
 class DonationController {
   async store(request, response) {
@@ -7,41 +6,17 @@ class DonationController {
     const { id: donatorId } = request;
     const { value } = request.body;
 
-    const caseModel = await Case.findByPk(caseId);
-
-    if (!caseModel) {
-      return response.status(404).json({ error: 'Case not found' });
-    }
-
-    if (!caseModel.opened) {
-      return response.status(400).json({
-        error: 'Donation fails, this case does not accept more donations',
-      });
-    }
-
-    const valueDiff = caseModel.value - caseModel.value_collected;
-
-    if (valueDiff < value) {
-      return response
-        .status(400)
-        .json({ error: 'Donation amount exceeds the case limit' });
-    }
-
-    const donation = await Donation.create({
+    const { statusCode, data, error } = await new DonationService().create({
+      caseId,
+      donatorId,
       value,
-      case_id: caseId,
-      donator_id: donatorId,
     });
 
-    caseModel.value_collected += value;
-    caseModel.save();
+    if (error) {
+      return response.status(statusCode).json({ error });
+    }
 
-    return response.status(201).json({
-      id: donation.id,
-      value: donation.value,
-      case_id: caseId,
-      donator_id: donatorId,
-    });
+    return response.status(statusCode).json({ ...data });
   }
 }
 
