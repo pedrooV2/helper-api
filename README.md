@@ -32,6 +32,10 @@ $ npm install # com npm
 # Iniciando os containers
 $ docker-compose up -d
 
+# Rodando as migrations
+$ yarn sequelize db:migrate # com yarn
+$ npx sequelize db:migrate # com npm
+
 # Iniciando o servidor
 $ yarn dev # com yarn
 $ npm run dev # com npm
