@@ -31,6 +31,8 @@ import validateCaseStore from './app/validators/Cases/CaseStore';
 import validatePhoneStore from './app/validators/Phone/PhoneStore';
 import validateSocialMedia from './app/validators/SocialMedia/SocialMediaStore';
 import validateDonationStore from './app/validators/Donation/DonationStore';
+import validateAvatarStore from './app/validators/Avatar/AvatarStore';
+import validateFileStore from './app/validators/File/FileStore';
 
 const routes = new Router();
 const upload = multer(multerConfig);
@@ -80,7 +82,12 @@ routes.post(
   validateCaseStore,
   CaseController.store
 );
-routes.post('/cases/:id/files', upload.single('file'), FileController.store);
+routes.post(
+  '/cases/:id/files',
+  upload.single('file'),
+  validateFileStore,
+  FileController.store
+);
 
 routes.post(
   '/cases/:id/donations',
@@ -90,5 +97,10 @@ routes.post(
 );
 
 // Upload files
-routes.post('/avatars', upload.single('avatar'), AvatarController.store);
+routes.post(
+  '/avatars',
+  upload.single('avatar'),
+  validateAvatarStore,
+  AvatarController.store
+);
 export default routes;
