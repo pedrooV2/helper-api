@@ -37,6 +37,30 @@ class SocialMediaService {
       },
     };
   }
+
+  async findAll(payload) {
+    const { entityId } = payload;
+
+    const profile = await this.entityProfileModel.findOne({
+      where: { entity_id: entityId },
+    });
+
+    if (!profile) {
+      return {
+        statusCode: 404,
+        error: 'Profile not found',
+      };
+    }
+
+    const socialMedias = await this.socialMediaModel.findAll({
+      where: { entity_profile_id: profile.id },
+    });
+
+    return {
+      statusCode: 200,
+      data: socialMedias,
+    };
+  }
 }
 
 export default SocialMediaService;
