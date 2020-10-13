@@ -2,9 +2,11 @@ import EntityFactory from '../../factories/Entity/factory';
 
 class EntityService {
   constructor() {
-    const { entityModel } = EntityFactory();
+    const { entityModel, entityProfileModel, avatarModel } = EntityFactory();
 
     this.entityModel = entityModel;
+    this.entityProfileModel = entityProfileModel;
+    this.avatarModel = avatarModel;
   }
 
   async create(payload) {
@@ -36,7 +38,34 @@ class EntityService {
   async auth(payload) {
     const { email, password } = payload;
 
-    const entity = await this.entityModel.findOne({ where: { email } });
+    const entity = await this.entityModel.findOne({
+      where: { email },
+      attributes: ['id', 'name', 'email', 'password_hash'],
+      include: [
+        {
+          model: this.entityProfileModel,
+          as: 'profile',
+          attributes: [
+            'id',
+            'cnpj',
+            'description',
+            'whatsapp',
+            'street',
+            'number',
+            'neighborhood',
+            'city',
+            'state',
+          ],
+          include: [
+            {
+              model: this.avatarModel,
+              as: 'avatar',
+              attributes: ['id', 'filepath', 'url'],
+            },
+          ],
+        },
+      ],
+    });
 
     if (!entity) {
       return {
@@ -52,15 +81,12 @@ class EntityService {
       };
     }
 
-    const { id } = entity;
+    delete entity.dataValues.password_hash;
 
     return {
       statusCode: 201,
       data: {
-        entity: {
-          id,
-          email,
-        },
+        entity,
         token: entity.generateToken(),
       },
     };
