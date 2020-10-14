@@ -1,4 +1,5 @@
 import DonationService from '../services/Donation/service';
+import Cache from '../../libs/Cache';
 
 class DonationController {
   async store(request, response) {
@@ -6,7 +7,12 @@ class DonationController {
     const { id: donatorId } = request;
     const { value } = request.body;
 
-    const { statusCode, data, error } = await new DonationService().create({
+    const {
+      statusCode,
+      data,
+      error,
+      entity_id,
+    } = await new DonationService().create({
       caseId,
       donatorId,
       value,
@@ -15,6 +21,8 @@ class DonationController {
     if (error) {
       return response.status(statusCode).json({ error });
     }
+
+    await Cache.invalidate(`entity:${entity_id}:dashboard`);
 
     return response.status(statusCode).json({ ...data });
   }

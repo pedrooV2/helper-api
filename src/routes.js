@@ -16,6 +16,7 @@ import FileController from './app/controllers/FileController';
 import PhoneController from './app/controllers/PhoneCotroller';
 import SocialMediaController from './app/controllers/SocialMediaController';
 import DonationController from './app/controllers/DonationController';
+import DashboardController from './app/controllers/Entity/DashboardController';
 
 //  Middlewares
 import authMiddleware from './app/middlewares/auth';
@@ -50,9 +51,15 @@ routes.post(
   validateProfileStore,
   ProfileController.store
 );
-
 // Private routes
 routes.use(authMiddleware);
+
+// Entity Dashboard
+routes.get(
+  '/entities/dashboard',
+  isEntityMiddleware,
+  DashboardController.index
+);
 
 // Phones
 routes.post(

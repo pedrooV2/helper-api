@@ -53,6 +53,7 @@ class DonationService {
         case_id: caseId,
         donator_id: donatorId,
       },
+      entity_id: caseModel.entity_id,
     };
   }
 }
