@@ -1,5 +1,5 @@
-import { Op } from 'sequelize';
 import Case from '../models/Case';
+import CaseService from '../services/Case/service';
 
 class CaseController {
   async store(request, response) {
@@ -14,30 +14,15 @@ class CaseController {
     const { page = 1, limit = 10, title = '', opened } = request.query;
     const { id: entity_id } = request;
 
-    const where = {
-      title: {
-        [Op.like]: `%${title}%`,
-      },
-      entity_id,
-    };
-
-    if (opened) {
-      where.opened = opened;
-    }
-
-    const cases = await Case.findAll({
-      where,
-      order: [['created_at', 'DESC']],
+    const { statusCode, data } = await new CaseService().getByEntityId({
+      page,
       limit,
-      offset: (page - 1) * limit,
+      title,
+      opened,
+      entity_id,
     });
 
-    const totalRecords = await Case.count({
-      where,
-    });
-    const totalPages = Math.ceil(totalRecords / limit);
-
-    return response.status(200).json({ cases, totalRecords, totalPages });
+    return response.status(statusCode).json({ ...data });
   }
 }
 export default new CaseController();
