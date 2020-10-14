@@ -28,7 +28,6 @@ class Entity extends Model {
   }
 
   checkPassword(password) {
-    console.log(this.password_hash);
     return bcrypt.compare(password, this.password_hash);
   }
 
