@@ -1,11 +1,14 @@
 import Case from '../models/Case';
 import CaseService from '../services/Case/service';
+import Cache from '../../libs/Cache';
 
 class CaseController {
   async store(request, response) {
     request.body.entity_id = request.id;
 
     const caseModel = await Case.create(request.body);
+
+    await Cache.invalidate(`entity:${request.id}:dashboard`);
 
     return response.status(201).json(caseModel);
   }
