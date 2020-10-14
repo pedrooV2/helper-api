@@ -82,6 +82,7 @@ routes.post(
   validateCaseStore,
   CaseController.store
 );
+routes.get('/entities/cases', isEntityMiddleware, CaseController.index);
 routes.post(
   '/cases/:id/files',
   upload.single('file'),
