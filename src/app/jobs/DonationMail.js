@@ -1,4 +1,5 @@
 import Mail from '../../libs/Mail';
+import formatMoney from '../helpers/format';
 
 class DonationMail {
   get key() {
@@ -15,7 +16,7 @@ class DonationMail {
       template: 'donation',
       context: {
         entityName,
-        valueDonated,
+        valueDonated: formatMoney(valueDonated),
         caseTitle,
         caseLink: `${process.env.WEB_APP_URL}/cases/detail-case/${caseId}`,
         assetsUrl: `${process.env.APP_URL}:${process.env.APP_PORT}/assets`,
