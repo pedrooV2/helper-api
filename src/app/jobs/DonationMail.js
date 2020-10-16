@@ -18,6 +18,7 @@ class DonationMail {
         valueDonated,
         caseTitle,
         caseLink: `${process.env.WEB_APP_URL}/cases/detail-case/${caseId}`,
+        assetsUrl: `${process.env.APP_URL}:${process.env.APP_PORT}/assets`,
       },
     });
   }
