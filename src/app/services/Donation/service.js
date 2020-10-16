@@ -1,11 +1,13 @@
 import DonationFactory from '../../factories/Donation/factory';
+import DonationMailJob from '../../jobs/DonationMail';
 
 class DonationService {
   constructor() {
-    const { CaseModel, DonationModel } = DonationFactory();
+    const { CaseModel, DonationModel, queue } = DonationFactory();
 
     this.caseModel = CaseModel;
     this.donationModel = DonationModel;
+    this.queue = queue;
   }
 
   async create(payload) {
@@ -44,6 +46,13 @@ class DonationService {
 
     caseModel.value_collected += value;
     caseModel.save();
+
+    this.queue.add(DonationMailJob.key, {
+      entityId: caseModel.entity_id,
+      valueDonated: value,
+      caseTitle: caseModel.title,
+      caseId: caseModel.id,
+    });
 
     return {
       statusCode: 201,
