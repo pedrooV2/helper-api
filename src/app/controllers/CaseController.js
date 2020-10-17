@@ -29,7 +29,19 @@ class CaseController {
   }
 
   async show(request, response) {
-    return response.json();
+    const { id } = request.params;
+    const { id: entity_id } = request;
+
+    const { error, data, statusCode } = await new CaseService().getCaseById({
+      id,
+      entity_id,
+    });
+
+    if (error) {
+      return response.status(statusCode).json({ error });
+    }
+
+    return response.status(statusCode).json({ ...data });
   }
 }
 export default new CaseController();

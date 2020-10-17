@@ -3,10 +3,12 @@ import CaseFactory from '../../factories/Case/factory';
 
 class CaseService {
   constructor() {
-    const { caseModel, fileModel } = CaseFactory();
+    const { caseModel, fileModel, donationModel, donatorModel } = CaseFactory();
 
     this.caseModel = caseModel;
     this.fileModel = fileModel;
+    this.donationModel = donationModel;
+    this.donatorModel = donatorModel;
   }
 
   async getByEntityId(payload) {
@@ -45,7 +47,21 @@ class CaseService {
     const { id, entity_id } = payload;
 
     const caseModel = await this.caseModel.findByPk(id, {
-      include: [{ model: this.fileModel, as: 'files' }],
+      include: [
+        { model: this.fileModel, as: 'files' },
+        {
+          model: this.donationModel,
+          as: 'donations',
+          attributes: ['id', 'value', 'createdAt'],
+          include: [
+            {
+              model: this.donatorModel,
+              as: 'donator',
+              attributes: ['id', 'full_name'],
+            },
+          ],
+        },
+      ],
     });
 
     if (!caseModel) {
@@ -55,7 +71,7 @@ class CaseService {
       };
     }
 
-    if (!caseModel.entity_id !== entity_id) {
+    if (caseModel.entity_id !== entity_id) {
       return {
         statusCode: 403,
         error: 'Operation not permitted',
@@ -64,7 +80,7 @@ class CaseService {
 
     return {
       statusCode: 200,
-      data: caseModel,
+      data: caseModel.get(),
     };
   }
 }

@@ -34,6 +34,7 @@ import validateSocialMedia from './app/validators/SocialMedia/SocialMediaStore';
 import validateDonationStore from './app/validators/Donation/DonationStore';
 import validateAvatarStore from './app/validators/Avatar/AvatarStore';
 import validateFileStore from './app/validators/File/FileStore';
+import validateCaseShow from './app/validators/Cases/CaseShow';
 
 const routes = new Router();
 const upload = multer(multerConfig);
@@ -90,7 +91,12 @@ routes.post(
   CaseController.store
 );
 routes.get('/entities/cases', isEntityMiddleware, CaseController.index);
-routes.get('/entities/cases/:id', isEntityMiddleware, CaseController.show);
+routes.get(
+  '/entities/cases/:id',
+  isEntityMiddleware,
+  validateCaseShow,
+  CaseController.show
+);
 routes.post(
   '/cases/:id/files',
   upload.single('file'),
