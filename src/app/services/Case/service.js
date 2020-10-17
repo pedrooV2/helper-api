@@ -3,9 +3,10 @@ import CaseFactory from '../../factories/Case/factory';
 
 class CaseService {
   constructor() {
-    const { caseModel } = CaseFactory();
+    const { caseModel, fileModel } = CaseFactory();
 
     this.caseModel = caseModel;
+    this.fileModel = fileModel;
   }
 
   async getByEntityId(payload) {
