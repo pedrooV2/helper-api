@@ -52,7 +52,7 @@ class CaseService {
         {
           model: this.donationModel,
           as: 'donations',
-          attributes: ['id', 'value', 'createdAt'],
+          attributes: ['id', 'value', 'createdAt', 'is_anonymous'],
           include: [
             {
               model: this.donatorModel,
@@ -78,9 +78,33 @@ class CaseService {
       };
     }
 
+    const caseData = caseModel.get();
+
+    const donations = caseData.donations.map((donation) => {
+      const {
+        is_anonymous,
+        value,
+        id: donation_id,
+        createdAt,
+      } = donation.get();
+
+      if (is_anonymous) {
+        return {
+          value,
+          id: donation_id,
+          createdAt,
+          donator: null,
+        };
+      }
+
+      return donation.get();
+    });
+
+    caseData.donations = donations;
+
     return {
       statusCode: 200,
-      data: caseModel.get(),
+      data: caseData,
     };
   }
 }
