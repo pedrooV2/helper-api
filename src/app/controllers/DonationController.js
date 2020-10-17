@@ -23,6 +23,7 @@ class DonationController {
     }
 
     await Cache.invalidate(`entity:${entity_id}:dashboard`);
+    await Cache.invalidate(`entity:${entity_id}:case:${caseId}`);
 
     return response.status(statusCode).json({ ...data });
   }

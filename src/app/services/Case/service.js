@@ -3,9 +3,12 @@ import CaseFactory from '../../factories/Case/factory';
 
 class CaseService {
   constructor() {
-    const { caseModel } = CaseFactory();
+    const { caseModel, fileModel, donationModel, donatorModel } = CaseFactory();
 
     this.caseModel = caseModel;
+    this.fileModel = fileModel;
+    this.donationModel = donationModel;
+    this.donatorModel = donatorModel;
   }
 
   async getByEntityId(payload) {
@@ -37,6 +40,47 @@ class CaseService {
     return {
       statusCode: 200,
       data: { cases, totalRecords, totalPages },
+    };
+  }
+
+  async getCaseById(payload) {
+    const { id, entity_id } = payload;
+
+    const caseModel = await this.caseModel.findByPk(id, {
+      include: [
+        { model: this.fileModel, as: 'files' },
+        {
+          model: this.donationModel,
+          as: 'donations',
+          attributes: ['id', 'value', 'createdAt'],
+          include: [
+            {
+              model: this.donatorModel,
+              as: 'donator',
+              attributes: ['id', 'full_name'],
+            },
+          ],
+        },
+      ],
+    });
+
+    if (!caseModel) {
+      return {
+        statusCode: 404,
+        error: 'Case not found',
+      };
+    }
+
+    if (caseModel.entity_id !== entity_id) {
+      return {
+        statusCode: 403,
+        error: 'Operation not permitted',
+      };
+    }
+
+    return {
+      statusCode: 200,
+      data: caseModel.get(),
     };
   }
 }
