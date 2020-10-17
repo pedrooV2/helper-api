@@ -13,6 +13,7 @@ class Donation extends Model {
             this.setDataValue('value', value * 100);
           },
         },
+        is_anonymous: Sequelize.BOOLEAN,
       },
       { sequelize }
     );

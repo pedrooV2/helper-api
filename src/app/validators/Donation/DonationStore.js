@@ -4,6 +4,7 @@ export default async (request, response, next) => {
   try {
     const schema = Yup.object().shape({
       value: Yup.number().positive().required(),
+      is_anonymous: Yup.boolean().required(),
     });
 
     await schema.validate(request.body, { abortEarly: false });
