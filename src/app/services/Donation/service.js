@@ -49,6 +49,9 @@ class DonationService {
     });
 
     caseModel.value_collected += value;
+    if (caseModel.value_collected === caseModel.value) {
+      caseModel.opened = false;
+    }
     caseModel.save();
 
     this.queue.add(DonationMailJob.key, {
