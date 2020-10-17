@@ -32,6 +32,12 @@ class CaseController {
     const { id } = request.params;
     const { id: entity_id } = request;
 
+    const cached = await Cache.get(`entity:${entity_id}:case:${id}`);
+
+    if (cached) {
+      return response.status(200).json(cached);
+    }
+
     const { error, data, statusCode } = await new CaseService().getCaseById({
       id,
       entity_id,
@@ -40,6 +46,8 @@ class CaseController {
     if (error) {
       return response.status(statusCode).json({ error });
     }
+
+    await Cache.set(`entity:${entity_id}:case:${id}`, { ...data });
 
     return response.status(statusCode).json({ ...data });
   }
