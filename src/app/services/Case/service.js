@@ -48,7 +48,11 @@ class CaseService {
 
     const caseModel = await this.caseModel.findByPk(id, {
       include: [
-        { model: this.fileModel, as: 'files' },
+        {
+          model: this.fileModel,
+          as: 'files',
+          attributes: ['id', 'filepath', 'url'],
+        },
         {
           model: this.donationModel,
           as: 'donations',
