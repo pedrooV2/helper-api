@@ -1,5 +1,69 @@
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Roboto:wght@400;700&display=swap" rel="stylesheet"> 
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Roboto:wght@400;700&display=swap"
+  rel="stylesheet">
 
-<div style="font-family: Roboto, sans-serif; font-size: 16px, line-height: 1.6, color: #222; max-width: 600px;">
+<style>
+  * {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+  }
+
+  .container {
+    display: flex;
+    width: 100%;
+    height: auto;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: #263238;
+    padding: 24px;
+  }
+
+  .container h1 {
+    font-family: Montserrat, sans-serif;
+    font-weight: bold;
+    color: #FF6B6C;
+    font-size: 3.0rem;
+    margin: 48px 0;
+  }
+
+  .container footer {
+    margin: 60px 0 48px 0;
+  }
+
+  .container footer h3 {
+    font-family: Montserrat, sans-serif;
+    font-weight: bold;
+    color: #FF6B6C;
+    font-size: 2rem;
+    text-align: center;
+  }
+
+  .container footer div {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    margin-top: 24px;
+  }
+
+  .container footer div img {
+    width: 24px;
+    height: 24px;
+    margin: 0 12px;
+  }
+</style>
+
+<div class="container">
+  <h1>Helper</h1>
   {{{ body }}}
+  <footer>
+    <h3>Helper</h3>
+    <div>
+      <img src="{{assetsUrl}}/icons/facebook.svg" alt="Facebook">
+      <img src="{{assetsUrl}}/icons/instagram.svg" alt="Instagram">
+      <img src="{{assetsUrl}}/icons/twitter.svg" alt="Twitter">
+    </div>
+  </footer>
 </div>
