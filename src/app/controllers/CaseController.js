@@ -27,5 +27,9 @@ class CaseController {
 
     return response.status(statusCode).json({ ...data });
   }
+
+  async show(request, response) {
+    return response.json();
+  }
 }
 export default new CaseController();
