@@ -40,6 +40,33 @@ class CaseService {
       data: { cases, totalRecords, totalPages },
     };
   }
+
+  async getCaseById(payload) {
+    const { id, entity_id } = payload;
+
+    const caseModel = await this.caseModel.findByPk(id, {
+      include: [{ model: this.fileModel, as: 'files' }],
+    });
+
+    if (!caseModel) {
+      return {
+        statusCode: 404,
+        error: 'Case not found',
+      };
+    }
+
+    if (!caseModel.entity_id !== entity_id) {
+      return {
+        statusCode: 403,
+        error: 'Operation not permitted',
+      };
+    }
+
+    return {
+      statusCode: 200,
+      data: caseModel,
+    };
+  }
 }
 
 export default CaseService;
