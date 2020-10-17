@@ -5,7 +5,7 @@ class DonationController {
   async store(request, response) {
     const { id: caseId } = request.params;
     const { id: donatorId } = request;
-    const { value } = request.body;
+    const { value, is_anonymous: isAnonymous } = request.body;
 
     const {
       statusCode,
@@ -16,6 +16,7 @@ class DonationController {
       caseId,
       donatorId,
       value,
+      isAnonymous,
     });
 
     if (error) {
@@ -23,6 +24,7 @@ class DonationController {
     }
 
     await Cache.invalidate(`entity:${entity_id}:dashboard`);
+    await Cache.invalidate(`entity:${entity_id}:case:${caseId}`);
 
     return response.status(statusCode).json({ ...data });
   }

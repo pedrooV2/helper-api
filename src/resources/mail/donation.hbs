@@ -1,0 +1,69 @@
+<style>
+  .container h2 {
+    font-size: 2.4rem;
+    font-family: Montserrat, sans-serif;
+    text-align: center;
+  }
+
+  .container p {
+    margin: 48px 0;
+    font-family: Roboto, sans-serif;
+    line-height: 2rem;
+    text-align: center;
+  }
+
+  .container img {
+    width: 50%;
+    height: auto;
+  }
+
+  .container a {
+    text-decoration: none;
+    background-color: #FF6B6C;
+    padding: 24px 48px;
+    border-radius: 8px;
+    color: #FFF;
+    font-family: Roboto, sans-serif;
+    font-weight: bold;
+  }
+
+  .donation {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+
+    padding: 24px 48px;
+    background-color: #6FCF97;
+    border-radius: 8px;
+
+    font-family: Montserrat, sans-serif;
+    font-size: 2.4rem;
+    color: #FFF;
+  }
+
+  .donation img {
+    width: 48px;
+    height: 48px;
+    margin-right: 18px;
+  }
+</style>
+
+
+<h2>Você recebeu uma doação!</h2>
+<p>
+  Olá <strong>{{entityName}}.</strong> Temos uma boa notícia para você!
+  <br>
+  Um doador acabou de realizar uma doação no valor de
+</p>
+
+<div class="donation">
+  <img src="{{assetsUrl}}/icons/money.svg" alt="Icone de doação">
+  <strong>{{valueDonated}}</strong>
+</div>
+
+<p>para o caso - <strong>{{caseTitle}}</strong></p>
+<img src="{{assetsUrl}}/images/donation-mail.svg" alt="Imagem ilustrativa">
+<p><strong>Para mais detalhes do caso, clique no botão abaixo</strong></p>
+
+<a href="{{caseLink}}" target="_blank">Detalhes do caso</a>
