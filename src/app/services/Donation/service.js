@@ -12,7 +12,7 @@ class DonationService {
   }
 
   async create(payload) {
-    const { caseId, value, donatorId } = payload;
+    const { caseId, value, donatorId, isAnonymous } = payload;
 
     const caseModel = await this.caseModel.findByPk(caseId, {
       include: [{ model: this.entityModel, as: 'owner' }],
@@ -45,6 +45,7 @@ class DonationService {
       value,
       case_id: caseId,
       donator_id: donatorId,
+      is_anonymous: isAnonymous,
     });
 
     caseModel.value_collected += value;
