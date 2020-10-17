@@ -21,8 +21,16 @@ class App {
     this.server.use(cors());
     this.server.use(express.json());
     this.server.use(
+      '/assets',
+      express.static(path.resolve(__dirname, 'resources', 'assets'))
+    );
+    this.server.use(
       '/avatars',
       express.static(path.resolve(__dirname, '..', 'tmp', 'uploads', 'avatars'))
+    );
+    this.server.use(
+      '/files',
+      express.static(path.resolve(__dirname, '..', 'tmp', 'uploads', 'files'))
     );
 
     if (process.env.NODE_ENV === 'development') {
