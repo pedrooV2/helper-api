@@ -1,14 +1,22 @@
+import { Op } from 'sequelize';
 import DonationFactory from '../../factories/Donation/factory';
 import DonationMailJob from '../../jobs/DonationMail';
 
 class DonationService {
   constructor() {
-    const { CaseModel, DonationModel, queue, EntityModel } = DonationFactory();
+    const {
+      CaseModel,
+      DonationModel,
+      queue,
+      EntityModel,
+      DonatorModel,
+    } = DonationFactory();
 
     this.caseModel = CaseModel;
     this.donationModel = DonationModel;
     this.queue = queue;
     this.entityModel = EntityModel;
+    this.donatorModel = DonatorModel;
   }
 
   async create(payload) {
@@ -71,6 +79,56 @@ class DonationService {
         donator_id: donatorId,
       },
       entity_id: caseModel.entity_id,
+    };
+  }
+
+  async find(payload) {
+    const { entity_id, title } = payload;
+
+    const cases = await this.caseModel.findAll({
+      where: { entity_id },
+      attributes: ['id'],
+    });
+
+    const caseIds = cases.map(({ id }) => id);
+
+    const donations = await this.donationModel.findAll({
+      where: {
+        case_id: caseIds,
+      },
+      order: [['created_at', 'DESC']],
+      attributes: ['id', 'created_at', 'value', 'is_anonymous'],
+      include: [
+        {
+          model: this.donatorModel,
+          as: 'donator',
+          attributes: ['id', 'full_name'],
+        },
+        {
+          model: this.caseModel,
+          as: 'case',
+          attributes: ['id', 'title'],
+          where: { title: { [Op.like]: `%${title}%` } },
+        },
+      ],
+    });
+
+    const serializedDonations = donations.map((donation) => {
+      const { is_anonymous, donator, ...rest } = donation.get();
+
+      if (is_anonymous) {
+        return {
+          ...rest,
+          donator: null,
+        };
+      }
+
+      return { ...rest, donator };
+    });
+
+    return {
+      statusCode: 200,
+      data: serializedDonations,
     };
   }
 }

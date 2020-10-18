@@ -28,6 +28,18 @@ class DonationController {
 
     return response.status(statusCode).json({ ...data });
   }
+
+  async index(request, response) {
+    const { title = '' } = request.query;
+    const { id: entity_id } = request;
+
+    const { statusCode, data } = await new DonationService().find({
+      entity_id,
+      title,
+    });
+
+    return response.status(statusCode).json(data);
+  }
 }
 
 export default new DonationController();
