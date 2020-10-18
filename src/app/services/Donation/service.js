@@ -126,9 +126,18 @@ class DonationService {
       return { ...rest, donator };
     });
 
+    const totalDonated = await this.donationModel.sum('value', {
+      where: {
+        case_id: caseIds,
+      },
+    });
+
     return {
       statusCode: 200,
-      data: serializedDonations,
+      data: {
+        totalDonated: totalDonated / 100,
+        donations: serializedDonations,
+      },
     };
   }
 }
