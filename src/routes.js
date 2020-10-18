@@ -106,7 +106,7 @@ routes.post(
   validateFileStore,
   FileController.store
 );
-
+routes.get('/donations', isEntityMiddleware, DonationController.index);
 routes.post(
   '/cases/:id/donations',
   isDonatorMiddleware,
