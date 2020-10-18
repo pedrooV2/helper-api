@@ -2,8 +2,10 @@ import EntityProfileService from '../../services/Entity/Profile/service';
 
 class ProfileController {
   async store(request, response) {
+    const { id: entity_id } = request;
+
     const { statusCode, data, error } = await new EntityProfileService().create(
-      request.body
+      Object.assign(request.body, { entity_id })
     );
 
     if (error) {

@@ -12,7 +12,6 @@ export default async (request, response, next) => {
       neighborhood: Yup.string(),
       city: Yup.string(),
       state: Yup.string(),
-      entity_id: Yup.number().required(),
     });
 
     await schema.validate(request.body, { abortEarly: false });

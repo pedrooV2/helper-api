@@ -47,13 +47,16 @@ routes.post('/donators/auth', DonatorAuthController.store);
 // Entities
 routes.post('/entities', validateEntityStore, EntityController.store);
 routes.post('/entities/auth', validateEntityAuth, EntityAuthController.store);
+
+// Private routes
+routes.use(authMiddleware);
+
 routes.post(
   '/entities/profiles',
+  isEntityMiddleware,
   validateProfileStore,
   ProfileController.store
 );
-// Private routes
-routes.use(authMiddleware);
 
 // Entity Dashboard
 routes.get(
