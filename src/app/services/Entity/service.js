@@ -23,14 +23,16 @@ class EntityService {
       };
     }
 
-    const { id, name } = await this.entityModel.create(payload);
+    const entity = await this.entityModel.create(payload);
+
+    delete entity.dataValues.password_hash;
+    delete entity.dataValues.password;
 
     return {
       statusCode: 201,
       data: {
-        id,
-        name,
-        email,
+        entity,
+        token: entity.generateToken(),
       },
     };
   }
