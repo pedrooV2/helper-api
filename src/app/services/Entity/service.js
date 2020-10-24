@@ -93,6 +93,37 @@ class EntityService {
       },
     };
   }
+
+  async update(payload) {
+    const { email, oldPassword, entity_id } = payload;
+
+    const entity = await this.entityModel.findByPk(entity_id);
+
+    if (email && email !== entity.email) {
+      const usersExists = await this.entityModel.findOne({
+        where: { email },
+      });
+
+      if (usersExists)
+        return {
+          statusCode: 400,
+          error: 'Entity already exists',
+        };
+    }
+
+    if (oldPassword && !(await entity.checkPassword(oldPassword))) {
+      return {
+        statusCode: 401,
+        error: 'Password does not match',
+      };
+    }
+
+    await entity.update(payload);
+
+    return {
+      statusCode: 204,
+    };
+  }
 }
 
 export default EntityService;
