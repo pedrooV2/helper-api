@@ -25,6 +25,7 @@ import isDonatorMiddleware from './app/middlewares/donator';
 
 // Validators
 import validateEntityStore from './app/validators/Entity/EntityStore';
+import validateEntityUpdate from './app/validators/Entity/EntityUpdate';
 import validateEntityAuth from './app/validators/Entity/EntityAuth';
 import validateProfileStore from './app/validators/Entity/ProfileStore';
 import validateProfileUpdate from './app/validators/Entity/ProfileUpdate';
@@ -51,6 +52,14 @@ routes.post('/entities/auth', validateEntityAuth, EntityAuthController.store);
 
 // Private routes
 routes.use(authMiddleware);
+
+// Entity
+routes.put(
+  '/entities',
+  isEntityMiddleware,
+  validateEntityUpdate,
+  EntityController.update
+);
 
 // Profile
 routes.get('/entities/profiles', isEntityMiddleware, ProfileController.show);
