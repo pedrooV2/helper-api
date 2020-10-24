@@ -95,7 +95,7 @@ class EntityProfileService {
         {
           model: this.avatarModel,
           as: 'avatar',
-          attributes: ['id', 'url'],
+          attributes: ['id', 'url', 'filepath'],
         },
       ],
     });
@@ -110,6 +110,30 @@ class EntityProfileService {
     return {
       statusCode: 200,
       data: profile.get(),
+    };
+  }
+
+  async update(payload) {
+    const { avatar_id, entity_id } = payload;
+
+    if (avatar_id) {
+      const avatar = await this.avatarModel.findByPk(avatar_id);
+
+      if (!avatar) {
+        return {
+          statusCode: 404,
+          error: 'Avatar not found',
+        };
+      }
+    }
+
+    const profile = await this.entityProfileModel.update(payload, {
+      where: { entity_id },
+    });
+
+    return {
+      statusCode: 200,
+      data: profile,
     };
   }
 }
