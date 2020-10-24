@@ -53,6 +53,7 @@ routes.use(authMiddleware);
 
 // Profile
 routes.get('/entities/profiles', isEntityMiddleware, ProfileController.show);
+routes.put('/entities/profiles', isEntityMiddleware, ProfileController.update);
 
 routes.post(
   '/entities/profiles',

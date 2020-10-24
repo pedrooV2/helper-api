@@ -30,6 +30,10 @@ class ProfileController {
 
     return response.status(statusCode).json({ ...data });
   }
+
+  async update(request, response) {
+    return response.json();
+  }
 }
 
 export default new ProfileController();
