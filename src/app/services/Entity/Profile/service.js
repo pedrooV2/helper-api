@@ -127,13 +127,12 @@ class EntityProfileService {
       }
     }
 
-    const profile = await this.entityProfileModel.update(payload, {
+    await this.entityProfileModel.update(payload, {
       where: { entity_id },
     });
 
     return {
-      statusCode: 200,
-      data: profile,
+      statusCode: 204,
     };
   }
 }
