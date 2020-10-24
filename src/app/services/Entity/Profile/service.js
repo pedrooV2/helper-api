@@ -2,10 +2,15 @@ import EntityProfileFactory from '../../../factories/Entity/Profile/factory';
 
 class EntityProfileService {
   constructor() {
-    const { entityModel, entityProfileModel } = EntityProfileFactory();
+    const {
+      entityModel,
+      entityProfileModel,
+      avatarModel,
+    } = EntityProfileFactory();
 
     this.entityModel = entityModel;
     this.entityProfileModel = entityProfileModel;
+    this.avatarModel = avatarModel;
   }
 
   async create(payload) {
@@ -61,6 +66,50 @@ class EntityProfileService {
         state,
         entity_id,
       },
+    };
+  }
+
+  async getByEntityId(payload) {
+    const { entity_id } = payload;
+
+    const profile = await this.entityProfileModel.findOne({
+      where: { entity_id },
+      attributes: [
+        'id',
+        'cnpj',
+        'initials',
+        'description',
+        'whatsapp',
+        'street',
+        'number',
+        'neighborhood',
+        'city',
+        'state',
+      ],
+      include: [
+        {
+          model: this.entityModel,
+          as: 'entity',
+          attributes: ['id', 'name', 'email'],
+        },
+        {
+          model: this.avatarModel,
+          as: 'avatar',
+          attributes: ['id', 'url'],
+        },
+      ],
+    });
+
+    if (!profile) {
+      return {
+        statusCode: 404,
+        error: 'Profile not found',
+      };
+    }
+
+    return {
+      statusCode: 200,
+      data: profile.get(),
     };
   }
 }
