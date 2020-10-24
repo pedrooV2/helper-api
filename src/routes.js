@@ -51,6 +51,9 @@ routes.post('/entities/auth', validateEntityAuth, EntityAuthController.store);
 // Private routes
 routes.use(authMiddleware);
 
+// Profile
+routes.get('/entities/profiles', isEntityMiddleware, ProfileController.show);
+
 routes.post(
   '/entities/profiles',
   isEntityMiddleware,
