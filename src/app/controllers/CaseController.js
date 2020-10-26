@@ -51,5 +51,24 @@ class CaseController {
 
     return response.status(statusCode).json({ ...data });
   }
+
+  async update(request, response) {
+    const { id: case_id } = request.params;
+    const { id: entity_id } = request;
+
+    const { error, data, statusCode } = await new CaseService().update({
+      case_id,
+      entity_id,
+      ...request.body,
+    });
+
+    if (error) {
+      return response.status(statusCode).json({ error });
+    }
+
+    await Cache.invalidate(`entity:${entity_id}:case:${case_id}`);
+
+    return response.status(statusCode).json({ ...data });
+  }
 }
 export default new CaseController();

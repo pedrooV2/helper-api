@@ -31,6 +31,7 @@ import validateProfileStore from './app/validators/Entity/ProfileStore';
 import validateProfileUpdate from './app/validators/Entity/ProfileUpdate';
 import validateDonatorStore from './app/validators/Donator/DonatorStore';
 import validateCaseStore from './app/validators/Cases/CaseStore';
+import validateCaseUpdate from './app/validators/Cases/CaseUpdate';
 import validatePhoneStore from './app/validators/Phone/PhoneStore';
 import validateSocialMedia from './app/validators/SocialMedia/SocialMediaStore';
 import validateDonationStore from './app/validators/Donation/DonationStore';
@@ -111,6 +112,12 @@ routes.post(
   isEntityMiddleware,
   validateCaseStore,
   CaseController.store
+);
+routes.put(
+  '/entities/cases/:id',
+  isEntityMiddleware,
+  validateCaseUpdate,
+  CaseController.update
 );
 routes.get('/entities/cases', isEntityMiddleware, CaseController.index);
 routes.get(
