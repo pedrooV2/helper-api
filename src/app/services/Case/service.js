@@ -114,6 +114,31 @@ class CaseService {
 
   async update(payload) {
     const { entity_id, case_id, title, description } = payload;
+
+    const caseModel = await this.caseModel.findByPk(case_id);
+
+    if (!caseModel) {
+      return {
+        statusCode: 404,
+        error: 'Case not found',
+      };
+    }
+
+    if (caseModel.entity_id !== entity_id) {
+      return {
+        statusCode: 403,
+        error: 'Operation not permitted',
+      };
+    }
+
+    caseModel.title = title;
+    caseModel.description = description;
+    caseModel.save();
+
+    return {
+      statusCode: 200,
+      data: caseModel.get(),
+    };
   }
 }
 
