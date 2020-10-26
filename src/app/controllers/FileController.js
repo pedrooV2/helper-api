@@ -45,6 +45,10 @@ class FileController {
 
     return response.status(201).json(file);
   }
+
+  async destroy(request, response) {
+    return response.json();
+  }
 }
 
 export default new FileController();
