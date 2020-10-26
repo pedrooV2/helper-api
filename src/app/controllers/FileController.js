@@ -47,7 +47,28 @@ class FileController {
   }
 
   async destroy(request, response) {
-    return response.json();
+    const { caseId, id } = request.params;
+    const { id: entity_id } = request;
+
+    const caseModel = await Case.findByPk(caseId);
+
+    if (!caseModel) {
+      return response.status(404).json({ error: 'Case not found' });
+    }
+
+    if (caseModel.entity_id !== entity_id) {
+      return response.status(403).json({ error: 'Operation not permitted' });
+    }
+
+    const file = await File.findOne({ where: { id, case_id: caseModel.id } });
+
+    if (!file) {
+      return response.status(404).json({ error: 'File not found' });
+    }
+
+    await file.destroy();
+
+    return response.status(204).json();
   }
 }
 

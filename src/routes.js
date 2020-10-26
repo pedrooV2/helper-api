@@ -126,7 +126,11 @@ routes.post(
   validateFileStore,
   FileController.store
 );
-routes.delete('/cases/:id/files', isEntityMiddleware, FileController.destroy);
+routes.delete(
+  '/cases/:caseId/files/:id',
+  isEntityMiddleware,
+  FileController.destroy
+);
 
 // Donations
 routes.get('/donations', isEntityMiddleware, DonationController.index);
