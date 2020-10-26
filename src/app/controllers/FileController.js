@@ -2,6 +2,7 @@ import fs from 'fs';
 import { resolve } from 'path';
 import File from '../models/File';
 import Case from '../models/Case';
+import Cache from '../../libs/Cache';
 
 class FileController {
   async store(request, response) {
@@ -67,6 +68,8 @@ class FileController {
     }
 
     await file.destroy();
+
+    await Cache.invalidate(`entity:${entity_id}:case:${caseId}`);
 
     return response.status(204).json();
   }

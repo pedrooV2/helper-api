@@ -111,6 +111,10 @@ class CaseService {
       data: caseData,
     };
   }
+
+  async update(payload) {
+    const { entity_id, case_id, title, description } = payload;
+  }
 }
 
 export default CaseService;
