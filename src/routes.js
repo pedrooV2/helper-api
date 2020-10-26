@@ -121,10 +121,18 @@ routes.get(
 );
 routes.post(
   '/cases/:id/files',
+  isEntityMiddleware,
   upload.single('file'),
   validateFileStore,
   FileController.store
 );
+routes.delete(
+  '/cases/:caseId/files/:id',
+  isEntityMiddleware,
+  FileController.destroy
+);
+
+// Donations
 routes.get('/donations', isEntityMiddleware, DonationController.index);
 routes.post(
   '/cases/:id/donations',
