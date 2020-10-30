@@ -44,6 +44,10 @@ class FileController {
       filepath,
     });
 
+    await Cache.invalidate(
+      `entity:${checkCaseExists.entity_id}:case:${checkCaseExists.id}`
+    );
+
     return response.status(201).json(file);
   }
 
