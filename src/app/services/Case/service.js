@@ -76,10 +76,13 @@ class CaseService {
     const ids = profiles.map(({ entity_id }) => entity_id);
 
     const cases = await this.caseModel.findAll({
-      where: { entity_id: ids },
+      where: { entity_id: ids, opened: true },
       order: [['created_at', 'DESC']],
       limit,
       offset: (page - 1) * limit,
+      include: [
+        { model: this.entityModel, as: 'owner', attributes: ['id', 'name'] },
+      ],
     });
 
     const totalRecords = await this.caseModel.count({
