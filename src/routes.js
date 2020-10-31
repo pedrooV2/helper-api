@@ -116,6 +116,8 @@ routes.get(
   DonatorCaseController.index
 );
 
+routes.get('/cases/:id', isDonatorMiddleware, DonatorCaseController.show);
+
 routes.post(
   '/cases',
   isEntityMiddleware,

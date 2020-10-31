@@ -1,3 +1,6 @@
+import Case from '../../models/Case';
+import File from '../../models/File';
+import Entity from '../../models/Entity';
 import CaseService from '../../services/Case/service';
 
 class CaseController {
@@ -12,6 +15,19 @@ class CaseController {
     });
 
     return response.status(statusCode).json({ ...data });
+  }
+
+  async show(request, response) {
+    const { id } = request.params;
+
+    const caseDetail = await Case.findByPk(id, {
+      include: [
+        { model: Entity, as: 'owner', attributes: ['id', 'name'] },
+        { model: File, as: 'files', attributes: ['id', 'filepath', 'url'] },
+      ],
+    });
+
+    return response.json(caseDetail);
   }
 }
 
