@@ -1,3 +1,4 @@
+import { Op } from 'sequelize';
 import EntityFactory from '../../factories/Entity/factory';
 
 class EntityService {
@@ -122,6 +123,44 @@ class EntityService {
 
     return {
       statusCode: 204,
+    };
+  }
+
+  async getByLocation(payload) {
+    const { city, state, limit, page } = payload;
+
+    const profiles = await this.entityProfileModel.findAll({
+      where: {
+        city: {
+          [Op.like]: `%${city}%`,
+        },
+        state: {
+          [Op.like]: `%${state}%`,
+        },
+      },
+      include: [
+        { model: this.entityModel, as: 'entity', attributes: ['id', 'name'] },
+      ],
+      order: [['created_at', 'DESC']],
+      limit,
+      offset: (page - 1) * limit,
+    });
+
+    const totalRecords = await this.entityProfileModel.count({
+      where: {
+        city: {
+          [Op.like]: `%${city}%`,
+        },
+        state: {
+          [Op.like]: `%${state}%`,
+        },
+      },
+    });
+    const totalPages = Math.ceil(totalRecords / limit);
+
+    return {
+      statusCode: 200,
+      data: { profiles, totalPages, totalRecords },
     };
   }
 }

@@ -115,9 +115,7 @@ routes.get(
   validateCaseIndex,
   DonatorCaseController.index
 );
-
 routes.get('/cases/:id', isDonatorMiddleware, DonatorCaseController.show);
-
 routes.post(
   '/cases',
   isEntityMiddleware,
@@ -149,6 +147,9 @@ routes.delete(
   isEntityMiddleware,
   FileController.destroy
 );
+
+// Entity
+routes.get('/entities', isDonatorMiddleware, EntityController.index);
 
 // Donations
 routes.get('/donations', isEntityMiddleware, DonationController.index);

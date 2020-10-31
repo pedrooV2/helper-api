@@ -27,5 +27,18 @@ class EntityController {
 
     return response.status(statusCode).json();
   }
+
+  async index(request, response) {
+    const { state, city, limit = 10, page = 1 } = request.query;
+
+    const { statusCode, data } = await new EntityService().getByLocation({
+      state,
+      city,
+      limit,
+      page,
+    });
+
+    return response.status(statusCode).json({ ...data });
+  }
 }
 export default new EntityController();
