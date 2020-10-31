@@ -13,6 +13,8 @@ class Donator extends Model {
         phone: Sequelize.STRING,
         password: Sequelize.VIRTUAL,
         password_hash: Sequelize.STRING,
+        state: Sequelize.STRING,
+        city: Sequelize.STRING,
       },
       { sequelize }
     );

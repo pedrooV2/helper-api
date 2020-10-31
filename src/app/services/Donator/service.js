@@ -22,9 +22,14 @@ class DonatorService {
       };
     }
 
-    const { id, full_name, phone, avatar_id } = await this.donatorModel.create(
-      payload
-    );
+    const {
+      id,
+      full_name,
+      phone,
+      state,
+      city,
+      avatar_id,
+    } = await this.donatorModel.create(payload);
 
     return {
       statusCode: 201,
@@ -32,6 +37,8 @@ class DonatorService {
         id,
         full_name,
         phone,
+        state,
+        city,
         avatar_id,
       },
     };

@@ -7,6 +7,8 @@ export default async (request, response, next) => {
       email: Yup.string().email().required(),
       phone: Yup.string().required(),
       password: Yup.string().min(6).required(),
+      state: Yup.string().length(2).required(),
+      city: Yup.string().max(25).required(),
     });
 
     await schema.validate(request.body, { abortEarly: false });
