@@ -3,12 +3,21 @@ import CaseFactory from '../../factories/Case/factory';
 
 class CaseService {
   constructor() {
-    const { caseModel, fileModel, donationModel, donatorModel } = CaseFactory();
+    const {
+      caseModel,
+      fileModel,
+      donationModel,
+      donatorModel,
+      entityModel,
+      entityProfileModel,
+    } = CaseFactory();
 
     this.caseModel = caseModel;
     this.fileModel = fileModel;
     this.donationModel = donationModel;
     this.donatorModel = donatorModel;
+    this.entityModel = entityModel;
+    this.entityProfileModel = entityProfileModel;
   }
 
   async getByEntityId(payload) {
@@ -40,6 +49,47 @@ class CaseService {
     return {
       statusCode: 200,
       data: { cases, totalRecords, totalPages },
+    };
+  }
+
+  async getByLocation(payload) {
+    const { city, state, limit, page } = payload;
+
+    const profiles = await this.entityProfileModel.findAll({
+      where: {
+        city: {
+          [Op.like]: `%${city}%`,
+        },
+        state: {
+          [Op.like]: `%${state}%`,
+        },
+      },
+    });
+
+    if (!profiles.length === 0) {
+      return {
+        statusCode: 200,
+        data: [],
+      };
+    }
+
+    const ids = profiles.map(({ entity_id }) => entity_id);
+
+    const cases = await this.caseModel.findAll({
+      where: { entity_id: ids },
+      order: [['created_at', 'DESC']],
+      limit,
+      offset: (page - 1) * limit,
+    });
+
+    const totalRecords = await this.caseModel.count({
+      where: { entity_id: ids },
+    });
+    const totalPages = Math.ceil(totalRecords / limit);
+
+    return {
+      statusCode: 200,
+      data: { cases, totalPages, totalRecords },
     };
   }
 

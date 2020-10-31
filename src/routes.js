@@ -12,6 +12,7 @@ import DonatorController from './app/controllers/Donator/DonatorController';
 import DonatorAuthController from './app/controllers/Donator/AuthController';
 import AvatarController from './app/controllers/AvatarController';
 import CaseController from './app/controllers/CaseController';
+import DonatorCaseController from './app/controllers/Donator/CaseController';
 import FileController from './app/controllers/FileController';
 import PhoneController from './app/controllers/PhoneCotroller';
 import SocialMediaController from './app/controllers/SocialMediaController';
@@ -32,6 +33,7 @@ import validateProfileUpdate from './app/validators/Entity/ProfileUpdate';
 import validateDonatorStore from './app/validators/Donator/DonatorStore';
 import validateCaseStore from './app/validators/Cases/CaseStore';
 import validateCaseUpdate from './app/validators/Cases/CaseUpdate';
+import validateCaseIndex from './app/validators/Cases/CaseIndex';
 import validatePhoneStore from './app/validators/Phone/PhoneStore';
 import validateSocialMedia from './app/validators/SocialMedia/SocialMediaStore';
 import validateDonationStore from './app/validators/Donation/DonationStore';
@@ -107,6 +109,13 @@ routes.post(
 );
 
 // Cases
+routes.get(
+  '/cases',
+  isDonatorMiddleware,
+  validateCaseIndex,
+  DonatorCaseController.index
+);
+
 routes.post(
   '/cases',
   isEntityMiddleware,
