@@ -22,6 +22,9 @@ class DonatorService {
       };
     }
 
+    payload.city = payload.city.toLowerCase();
+    payload.state = payload.state.toUpperCase();
+
     const {
       id,
       full_name,
