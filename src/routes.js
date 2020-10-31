@@ -82,7 +82,7 @@ routes.post(
 routes.get(
   '/entities/dashboard',
   isEntityMiddleware,
-  DashboardController.index
+  DashboardController.entity
 );
 
 // Phones
@@ -155,4 +155,12 @@ routes.post(
   validateAvatarStore,
   AvatarController.store
 );
+
+// Donator dashboard
+routes.get(
+  '/donators/dashboard',
+  isDonatorMiddleware,
+  DashboardController.donator
+);
+
 export default routes;
