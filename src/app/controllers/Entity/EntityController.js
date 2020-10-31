@@ -40,5 +40,13 @@ class EntityController {
 
     return response.status(statusCode).json({ ...data });
   }
+
+  async show(request, response) {
+    const { id } = request.params;
+
+    const { data, statusCode } = await new EntityService().getById(id);
+
+    return response.status(statusCode).json({ ...data });
+  }
 }
 export default new EntityController();

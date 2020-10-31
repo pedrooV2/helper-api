@@ -3,11 +3,17 @@ import EntityFactory from '../../factories/Entity/factory';
 
 class EntityService {
   constructor() {
-    const { entityModel, entityProfileModel, avatarModel } = EntityFactory();
+    const {
+      entityModel,
+      entityProfileModel,
+      avatarModel,
+      caseModel,
+    } = EntityFactory();
 
     this.entityModel = entityModel;
     this.entityProfileModel = entityProfileModel;
     this.avatarModel = avatarModel;
+    this.caseModel = caseModel;
   }
 
   async create(payload) {
@@ -161,6 +167,35 @@ class EntityService {
     return {
       statusCode: 200,
       data: { profiles, totalPages, totalRecords },
+    };
+  }
+
+  async getById(id) {
+    const entity = await this.entityModel.findByPk(id, {
+      attributes: ['id', 'name', 'email'],
+      include: [
+        {
+          model: this.entityProfileModel,
+          as: 'profile',
+          include: [
+            {
+              model: this.avatarModel,
+              as: 'avatar',
+              attributes: ['id', 'filepath', 'url'],
+            },
+          ],
+        },
+        {
+          model: this.caseModel,
+          as: 'cases',
+          where: { opened: true },
+        },
+      ],
+    });
+
+    return {
+      statusCode: 200,
+      data: entity.get(),
     };
   }
 }

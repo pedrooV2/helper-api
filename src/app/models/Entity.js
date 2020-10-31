@@ -50,6 +50,7 @@ class Entity extends Model {
       foreignKey: 'entity_id',
       as: 'profile',
     });
+    this.hasMany(models.Case, { foreignKey: 'entity_id', as: 'cases' });
   }
 }
 

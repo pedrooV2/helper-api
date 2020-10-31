@@ -150,6 +150,7 @@ routes.delete(
 
 // Entity
 routes.get('/entities', isDonatorMiddleware, EntityController.index);
+routes.get('/entities/:id', isDonatorMiddleware, EntityController.show);
 
 // Donations
 routes.get('/donations', isEntityMiddleware, DonationController.index);
