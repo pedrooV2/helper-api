@@ -44,6 +44,12 @@ class DashboardController {
   async donator(request, response) {
     const { id: donator_id } = request;
 
+    const cached = await Cache.get(`donator:${donator_id}:dashboard`);
+
+    if (cached) {
+      return response.json(cached);
+    }
+
     const donationAmount =
       (await Donation.sum('value', {
         where: { donator_id },
