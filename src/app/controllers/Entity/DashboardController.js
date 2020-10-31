@@ -3,7 +3,7 @@ import Donation from '../../models/Donation';
 import Cache from '../../../libs/Cache';
 
 class DashboardController {
-  async index(request, response) {
+  async entity(request, response) {
     const { id: entity_id } = request;
 
     const cached = await Cache.get(`entity:${entity_id}:dashboard`);
@@ -39,6 +39,17 @@ class DashboardController {
       donationsCount,
       totalAmount: totalAmount / 100,
     });
+  }
+
+  async donator(request, response) {
+    const { id: donator_id } = request;
+
+    const donationAmount =
+      (await Donation.sum('value', {
+        where: { donator_id },
+      })) || 0;
+
+    return response.json({ donationAmount });
   }
 }
 
