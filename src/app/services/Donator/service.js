@@ -25,24 +25,31 @@ class DonatorService {
     payload.city = payload.city.toLowerCase();
     payload.state = payload.state.toUpperCase();
 
-    const {
-      id,
-      full_name,
-      phone,
-      state,
-      city,
-      avatar_id,
-    } = await this.donatorModel.create(payload);
+    const donator = await this.donatorModel.create(payload);
+
+    const { id, full_name, phone, state, city, avatar_id } = donator;
+
+    let avatar = null;
+
+    if (avatar_id) {
+      avatar = await this.avatarModel.findByPk(avatar_id, {
+        attributes: ['id', 'filepath', 'url'],
+      });
+    }
 
     return {
       statusCode: 201,
       data: {
-        id,
-        full_name,
-        phone,
-        state,
-        city,
-        avatar_id,
+        donator: {
+          id,
+          full_name,
+          phone,
+          state,
+          city,
+          avatar,
+          email,
+        },
+        token: donator.generateToken(),
       },
     };
   }
@@ -75,12 +82,12 @@ class DonatorService {
       };
     }
 
-    const { full_name, phone, avatar, id } = donator;
+    const { full_name, phone, avatar, id, city, state } = donator;
 
     return {
       statusCode: 201,
       data: {
-        donator: { full_name, phone, avatar, id },
+        donator: { full_name, phone, avatar, id, city, state, email },
         token: donator.generateToken(),
       },
     };
