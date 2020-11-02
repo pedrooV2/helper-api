@@ -8,6 +8,17 @@ class CardController {
 
     return response.status(201).json(card);
   }
+
+  async index(request, response) {
+    const { id: donator_id } = request;
+
+    const cards = await Card.findAll({
+      where: { donator_id },
+      attributes: ['id', 'number', 'cvv', 'nickname', 'expiration_date', 'cpf'],
+    });
+
+    return response.json(cards);
+  }
 }
 
 export default new CardController();

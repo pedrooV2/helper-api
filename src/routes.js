@@ -193,4 +193,6 @@ routes.post(
   CardController.store
 );
 
+routes.get('/donators/cards', isDonatorMiddleware, CardController.index);
+
 export default routes;
