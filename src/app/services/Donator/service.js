@@ -25,17 +25,17 @@ class DonatorService {
     payload.city = payload.city.toLowerCase();
     payload.state = payload.state.toUpperCase();
 
-    const donator = await this.donatorModel.create(payload, {
-      include: [
-        {
-          model: this.avatarModel,
-          as: 'avatar',
-          attributes: ['id', 'filepath', 'url'],
-        },
-      ],
-    });
+    const donator = await this.donatorModel.create(payload);
 
-    const { id, full_name, phone, state, city, avatar_id, avatar } = donator;
+    const { id, full_name, phone, state, city, avatar_id } = donator;
+
+    let avatar = null;
+
+    if (avatar_id) {
+      avatar = await this.avatarModel.findByPk(avatar_id, {
+        attributes: ['id', 'filepath', 'url'],
+      });
+    }
 
     return {
       statusCode: 201,
@@ -45,8 +45,8 @@ class DonatorService {
         phone,
         state,
         city,
-        avatar_id,
         avatar,
+        email,
         token: donator.generateToken(),
       },
     };
