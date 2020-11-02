@@ -11,6 +11,7 @@ import EntityProfile from '../app/models/EntityProfile';
 import Phone from '../app/models/Phone';
 import SocialMedia from '../app/models/SocialMedia';
 import Donation from '../app/models/Donation';
+import Card from '../app/models/Card';
 
 // Load models in array
 const models = [
@@ -23,6 +24,7 @@ const models = [
   Phone,
   SocialMedia,
   Donation,
+  Card,
 ];
 
 class Database {

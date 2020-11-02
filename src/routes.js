@@ -18,6 +18,7 @@ import PhoneController from './app/controllers/PhoneCotroller';
 import SocialMediaController from './app/controllers/SocialMediaController';
 import DonationController from './app/controllers/DonationController';
 import DashboardController from './app/controllers/Entity/DashboardController';
+import CardController from './app/controllers/Donator/CardController';
 
 //  Middlewares
 import authMiddleware from './app/middlewares/auth';
@@ -41,6 +42,7 @@ import validateDonationStore from './app/validators/Donation/DonationStore';
 import validateAvatarStore from './app/validators/Avatar/AvatarStore';
 import validateFileStore from './app/validators/File/FileStore';
 import validateCaseShow from './app/validators/Cases/CaseShow';
+import validateCardStore from './app/validators/Card/CardStore';
 
 const routes = new Router();
 const upload = multer(multerConfig);
@@ -182,6 +184,13 @@ routes.put(
   isDonatorMiddleware,
   validateDonatorUpdate,
   DonatorController.update
+);
+
+routes.post(
+  '/donators/cards',
+  isDonatorMiddleware,
+  validateCardStore,
+  CardController.store
 );
 
 export default routes;
