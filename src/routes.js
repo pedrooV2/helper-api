@@ -18,6 +18,7 @@ import PhoneController from './app/controllers/PhoneCotroller';
 import SocialMediaController from './app/controllers/SocialMediaController';
 import DonationController from './app/controllers/DonationController';
 import DashboardController from './app/controllers/Entity/DashboardController';
+import CardController from './app/controllers/Donator/CardController';
 
 //  Middlewares
 import authMiddleware from './app/middlewares/auth';
@@ -183,5 +184,7 @@ routes.put(
   validateDonatorUpdate,
   DonatorController.update
 );
+
+routes.post('/donators/cards', isDonatorMiddleware, CardController.store);
 
 export default routes;
