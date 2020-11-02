@@ -40,13 +40,15 @@ class DonatorService {
     return {
       statusCode: 201,
       data: {
-        id,
-        full_name,
-        phone,
-        state,
-        city,
-        avatar,
-        email,
+        donator: {
+          id,
+          full_name,
+          phone,
+          state,
+          city,
+          avatar,
+          email,
+        },
         token: donator.generateToken(),
       },
     };
@@ -80,12 +82,12 @@ class DonatorService {
       };
     }
 
-    const { full_name, phone, avatar, id } = donator;
+    const { full_name, phone, avatar, id, city, state } = donator;
 
     return {
       statusCode: 201,
       data: {
-        donator: { full_name, phone, avatar, id },
+        donator: { full_name, phone, avatar, id, city, state, email },
         token: donator.generateToken(),
       },
     };
