@@ -26,6 +26,14 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
+      expiration_date: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      cpf: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
       created_at: {
         type: Sequelize.DATE,
         allowNull: false,

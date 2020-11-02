@@ -48,6 +48,7 @@ class Donator extends Model {
 
   static associate(models) {
     this.belongsTo(models.Avatar, { foreignKey: 'avatar_id', as: 'avatar' });
+    this.hasMany(models.Card, { foreignKey: 'donator_id', as: 'cards' });
   }
 }
 
