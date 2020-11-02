@@ -42,6 +42,7 @@ import validateDonationStore from './app/validators/Donation/DonationStore';
 import validateAvatarStore from './app/validators/Avatar/AvatarStore';
 import validateFileStore from './app/validators/File/FileStore';
 import validateCaseShow from './app/validators/Cases/CaseShow';
+import validateCardStore from './app/validators/Card/CardStore';
 
 const routes = new Router();
 const upload = multer(multerConfig);
@@ -185,6 +186,11 @@ routes.put(
   DonatorController.update
 );
 
-routes.post('/donators/cards', isDonatorMiddleware, CardController.store);
+routes.post(
+  '/donators/cards',
+  isDonatorMiddleware,
+  validateCardStore,
+  CardController.store
+);
 
 export default routes;
