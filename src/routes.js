@@ -31,6 +31,7 @@ import validateEntityAuth from './app/validators/Entity/EntityAuth';
 import validateProfileStore from './app/validators/Entity/ProfileStore';
 import validateProfileUpdate from './app/validators/Entity/ProfileUpdate';
 import validateDonatorStore from './app/validators/Donator/DonatorStore';
+import validateDonatorUpdate from './app/validators/Donator/DonatorUpdate';
 import validateCaseStore from './app/validators/Cases/CaseStore';
 import validateCaseUpdate from './app/validators/Cases/CaseUpdate';
 import validateCaseIndex from './app/validators/Cases/CaseIndex';
@@ -174,6 +175,13 @@ routes.get(
   '/donators/dashboard',
   isDonatorMiddleware,
   DashboardController.donator
+);
+
+routes.put(
+  '/donators',
+  isDonatorMiddleware,
+  validateDonatorUpdate,
+  DonatorController.update
 );
 
 export default routes;

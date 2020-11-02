@@ -9,6 +9,7 @@ export default async (request, response, next) => {
       password: Yup.string().min(6).required(),
       state: Yup.string().length(2).required(),
       city: Yup.string().max(25).required(),
+      avatar_id: Yup.number(),
     });
 
     await schema.validate(request.body, { abortEarly: false });

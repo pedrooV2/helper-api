@@ -12,6 +12,20 @@ class DonatorController {
 
     return response.status(statusCode).json({ ...data });
   }
+
+  async update(request, response) {
+    const { id: donator_id } = request;
+
+    const { statusCode, error, data } = await new DonatorService().update(
+      Object.assign(request.body, { donator_id })
+    );
+
+    if (error) {
+      return response.status(statusCode).json({ error });
+    }
+
+    return response.status(statusCode).json({ ...data });
+  }
 }
 
 export default new DonatorController();

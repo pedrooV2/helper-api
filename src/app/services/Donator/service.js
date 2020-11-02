@@ -92,6 +92,37 @@ class DonatorService {
       },
     };
   }
+
+  async update(payload) {
+    const { email, oldPassword, donator_id } = payload;
+
+    const donator = await this.donatorModel.findByPk(donator_id);
+
+    if (email && email !== donator.email) {
+      const usersExists = await this.donatorModel.findOne({
+        where: { email },
+      });
+
+      if (usersExists)
+        return {
+          statusCode: 400,
+          error: 'Entity already exists',
+        };
+    }
+
+    if (oldPassword && !(await donator.checkPassword(oldPassword))) {
+      return {
+        statusCode: 401,
+        error: 'Password does not match',
+      };
+    }
+
+    await donator.update(payload);
+
+    return {
+      statusCode: 204,
+    };
+  }
 }
 
 export default DonatorService;
