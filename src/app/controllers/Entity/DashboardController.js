@@ -55,7 +55,7 @@ class DashboardController {
         where: { donator_id },
       })) || 0;
 
-    Cache.set(`donator:${donator_id}:dashboard`);
+    Cache.set(`donator:${donator_id}:dashboard`, { donationAmount });
 
     return response.json({ donationAmount });
   }
