@@ -56,7 +56,7 @@ class DonationService {
       is_anonymous: isAnonymous,
     });
 
-    caseModel.value_collected += value;
+    caseModel.value_collected += Number.parseFloat(value);
     if (caseModel.value_collected === caseModel.value) {
       caseModel.opened = false;
     }
