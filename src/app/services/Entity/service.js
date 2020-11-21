@@ -146,6 +146,11 @@ class EntityService {
       },
       include: [
         { model: this.entityModel, as: 'entity', attributes: ['id', 'name'] },
+        {
+          model: this.avatarModel,
+          as: 'avatar',
+          attributes: ['id', 'filepath', 'url'],
+        },
       ],
       order: [['created_at', 'DESC']],
       limit,
