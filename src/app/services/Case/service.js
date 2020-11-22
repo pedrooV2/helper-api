@@ -82,6 +82,12 @@ class CaseService {
       offset: (page - 1) * limit,
       include: [
         { model: this.entityModel, as: 'owner', attributes: ['id', 'name'] },
+        {
+          model: this.fileModel,
+          as: 'files',
+          limit: 1,
+          attributes: ['id', 'filepath', 'url'],
+        },
       ],
     });
 
