@@ -138,10 +138,10 @@ class EntityService {
     const profiles = await this.entityProfileModel.findAll({
       where: {
         city: {
-          [Op.like]: `%${city}%`,
+          [Op.iLike]: `%${city}%`,
         },
         state: {
-          [Op.like]: `%${state}%`,
+          [Op.iLike]: `%${state}%`,
         },
       },
       include: [
