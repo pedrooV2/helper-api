@@ -13,7 +13,7 @@ export default async (request, response, next) => {
       cpf: Yup.string()
         .matches(/^\d{11}$/g)
         .required(),
-      expiration_date: Yup.string().matches(/^[01]{2}\/\d{2}$/g),
+      expiration_date: Yup.string().matches(/^\d{2}\/\d{2}$/g),
     });
 
     await schema.validate(request.body, { abortEarly: false });
