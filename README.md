@@ -1,7 +1,4 @@
 <h1 align="center"> :love_hotel: Helper API </h1>
-<h3 align="center">
-  :construction: Em construção... :construction:
-</h3>
 
 ---
 
